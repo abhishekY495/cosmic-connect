@@ -21,7 +21,7 @@ export default function Authentication({ signup, login }) {
     if (location.state) {
       return navigate(location?.state?.from?.pathname);
     } else {
-      return navigate("/home");
+      return navigate("/homepage");
     }
   };
 
