@@ -1,16 +1,32 @@
-import { Route, Routes } from "react-router-dom";
+import React, { useContext } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
+import { AuthContext } from "./contexts/AuthContext";
 import Authentication from "./components/Authentication";
-import Profile from "./pages/Profile";
-import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HomePage from "./pages/HomePage";
+import ExplorePage from "./pages/ExplorePage";
+import Profile from "./pages/Profile";
 
 function App() {
+  const { currentUser } = useContext(AuthContext);
   return (
     <div>
       <Toaster position="top-center" />
       <Routes>
+        <Route
+          path="/signup"
+          element={
+            currentUser ? <Navigate to="/home" /> : <Authentication signup />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            currentUser ? <Navigate to="/home" /> : <Authentication login />
+          }
+        />
         <Route
           path="/"
           element={
@@ -19,8 +35,22 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/signup" element={<Authentication signup />} />
-        <Route path="/login" element={<Authentication login />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/explore"
+          element={
+            <ProtectedRoute>
+              <ExplorePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/profile"
           element={
