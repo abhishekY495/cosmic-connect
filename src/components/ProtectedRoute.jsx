@@ -1,12 +1,8 @@
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function ProtectedRoute({ children }) {
-  const location = useLocation();
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  return !currentUser ? (
-    <Navigate to="/login" state={{ from: location }} />
-  ) : (
-    children
-  );
+  const { currentUser } = useContext(AuthContext);
+  return currentUser ? children : <Navigate to="/login" />;
 }
