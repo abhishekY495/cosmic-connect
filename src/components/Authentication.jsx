@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { AuthContext } from "../contexts/AuthContext";
@@ -10,22 +10,12 @@ export default function Authentication({ signup, login }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
   const guestCredentials = {
     email: "abhishek@testing.com",
     password: "abhishekY495",
   };
 
-  const redirectTo = () => {
-    if (location.state) {
-      return navigate(location?.state?.from?.pathname);
-    } else {
-      return navigate("/homepage");
-    }
-  };
-
-  const signUpBtnHandler = (e) => {
+  const signUpBtnHandler = () => {
     if (fullName.length === 0) {
       toast.error("Full Name cannot be empty");
     } else if (userName.length === 0) {
@@ -35,8 +25,15 @@ export default function Authentication({ signup, login }) {
     } else if (password.length <= 6) {
       toast.error("Password should be greater than 6 characters");
     } else {
-      signUpUser(fullName, userName, email, password);
-      redirectTo();
+      try {
+        toast.promise(signUpUser(fullName, userName, email, password), {
+          loading: "Signing Up",
+          success: "Signed Up",
+          error: (err) => `${err}`,
+        });
+      } catch (error) {
+        toast.error(error);
+      }
     }
   };
 
@@ -46,19 +43,25 @@ export default function Authentication({ signup, login }) {
     } else if (password.length === 0) {
       toast.error("Password cannot be empty");
     } else {
-      loginUser(email, password);
-      redirectTo();
+      toast.promise(loginUser(email, password), {
+        loading: "Logging In",
+        success: "Logged In",
+        error: (err) => `${err}`,
+      });
     }
   };
 
   const guestLoginBtnHandler = () => {
     setEmail(guestCredentials.email);
     setPassword(guestCredentials.password);
-    setTimeout(() => {
-      guestLogin(guestCredentials.email, guestCredentials.password);
-      toast.success("Logged In");
-      redirectTo();
-    }, 1500);
+    toast.promise(
+      guestLogin(guestCredentials.email, guestCredentials.password),
+      {
+        loading: "Logging In",
+        success: "Logged In",
+        error: (err) => `${err}`,
+      }
+    );
   };
 
   return (
