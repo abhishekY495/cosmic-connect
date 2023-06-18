@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import Profile from "./pages/Profile";
+import SinglePost from "./components/SinglePost";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -52,10 +53,18 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/:username"
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/:username/post/:id"
+          element={
+            <ProtectedRoute>
+              <SinglePost />
             </ProtectedRoute>
           }
         />
