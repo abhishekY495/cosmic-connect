@@ -32,7 +32,7 @@ export const postsDataReducer = (state, action) => {
       return {
         ...state,
         postsData: state.postsData.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         ),
         filterByCreatedAt: true,
         filterByTrending: false,
@@ -46,6 +46,37 @@ export const postsDataReducer = (state, action) => {
         ),
         filterByCreatedAt: false,
         filterByTrending: true,
+      };
+    }
+    case "LIKE_POST": {
+      const { postId, currentUser } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.id === postId) {
+          return { ...post, likedBy: [...post.likedBy, currentUser] };
+        } else {
+          return post;
+        }
+      });
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
+    case "UN_LIKE_POST": {
+      const { postId, currentUser } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.id === postId) {
+          const newLikedBy = post.likedBy.filter(
+            (user) => user.userName !== currentUser.userName
+          );
+          return { ...post, likedBy: newLikedBy };
+        } else {
+          return post;
+        }
+      });
+      return {
+        ...state,
+        postsData: newPostsData,
       };
     }
     default: {
