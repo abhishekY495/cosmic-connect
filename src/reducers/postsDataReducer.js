@@ -79,6 +79,37 @@ export const postsDataReducer = (state, action) => {
         postsData: newPostsData,
       };
     }
+    case "ADD_TO_BOOKMARK": {
+      const { postId, currentUser } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.id === postId) {
+          return { ...post, bookmarkedBy: [...post.bookmarkedBy, currentUser] };
+        } else {
+          return post;
+        }
+      });
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
+    case "REMOVE_FROM_BOOKMARK": {
+      const { postId, currentUser } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.id === postId) {
+          const newBookmarkedBy = post.bookmarkedBy.filter(
+            (user) => user.userName !== currentUser.userName
+          );
+          return { ...post, bookmarkedBy: newBookmarkedBy };
+        } else {
+          return post;
+        }
+      });
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
     default: {
       return state;
     }

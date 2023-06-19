@@ -7,6 +7,7 @@ import filledHeartIcon from "../assets/posts/filled-heart-icon.svg";
 import filledBookmarkIcon from "../assets/posts/filled-bookmark-icon.svg";
 import commentIcon from "../assets/posts/comment-icon.svg";
 import loadingGif from "../assets/posts/loadingGif.gif";
+import verifiedIcon from "../assets/profile/verified.svg";
 import NewPost from "./NewPost";
 import Filters from "./Filters";
 import { AuthContext } from "../contexts/AuthContext";
@@ -34,6 +35,16 @@ export default function PostsListing({
   };
   const unLikePost = (postId) => {
     dispatch({ type: "UN_LIKE_POST", payload: { postId, currentUser } });
+  };
+
+  const addToBookmark = (postId) => {
+    dispatch({ type: "ADD_TO_BOOKMARK", payload: { postId, currentUser } });
+  };
+  const removeFromBookmark = (postId) => {
+    dispatch({
+      type: "REMOVE_FROM_BOOKMARK",
+      payload: { postId, currentUser },
+    });
   };
 
   return (
@@ -74,8 +85,12 @@ export default function PostsListing({
             comments,
             createdAt,
             likedBy,
+            bookmarkedBy,
           } = post;
           const hasLiked = likedBy.find((user) => {
+            return user.userName === currentUser.userName;
+          });
+          const hasBookmarked = bookmarkedBy.find((user) => {
             return user.userName === currentUser.userName;
           });
 
@@ -94,7 +109,7 @@ export default function PostsListing({
                       <div className="flex gap-1 items-center">
                         {verified && (
                           <img
-                            src="https://img.icons8.com/?size=24&id=2sZ0sdlG9kWP&format=svg"
+                            src={verifiedIcon}
                             className="w-4"
                             alt="verified"
                           />
@@ -151,11 +166,21 @@ export default function PostsListing({
                     </div>
                   )}
                 </div>
-                <img
-                  src={emptyBookmarkIcon}
-                  alt="empty bookmark"
-                  className="w-5 hover:cursor-pointer"
-                />
+                {hasBookmarked ? (
+                  <img
+                    src={filledBookmarkIcon}
+                    onClick={() => removeFromBookmark(id)}
+                    alt="empty bookmark"
+                    className="w-5 hover:cursor-pointer"
+                  />
+                ) : (
+                  <img
+                    src={emptyBookmarkIcon}
+                    onClick={() => addToBookmark(id)}
+                    alt="filled bookmark"
+                    className="w-5 hover:cursor-pointer"
+                  />
+                )}
                 <Link to={`/${userName}/post/${id}`}>
                   <div className="flex items-center gap-1 hover:cursor-pointer">
                     <img src={commentIcon} alt="comment" className="w-5" />
