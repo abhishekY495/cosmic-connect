@@ -61,7 +61,7 @@ function App() {
           }
         />
         <Route
-          path="/:username/post/:id"
+          path="/:username/post/:postId"
           element={
             <ProtectedRoute>
               <SinglePost />
