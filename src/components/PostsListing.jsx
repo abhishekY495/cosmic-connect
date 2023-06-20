@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import emptyHeartIcon from "../assets/posts/empty-heart-icon.svg";
@@ -7,8 +7,10 @@ import filledHeartIcon from "../assets/posts/filled-heart-icon.svg";
 import filledBookmarkIcon from "../assets/posts/filled-bookmark-icon.svg";
 import commentIcon from "../assets/posts/comment-icon.svg";
 import loadingGif from "../assets/posts/loadingGif.gif";
+import optionsIcon from "../assets/posts/options-icon.svg";
+import deleteIcon from "../assets/posts/delete-icon.svg";
+import editIcon from "../assets/posts/edit-icon.svg";
 import verifiedIcon from "../assets/profile/verified.svg";
-import NewPost from "./NewPost";
 import Filters from "./Filters";
 import { AuthContext } from "../contexts/AuthContext";
 import { PostsDataContext } from "../contexts/PostsDataContext";
@@ -17,9 +19,13 @@ export default function PostsListing({
   postsData,
   postsLoading,
   postsDataError,
+  usersPost,
+  showComments,
 }) {
   const { dispatch } = useContext(PostsDataContext);
   const { currentUser } = useContext(AuthContext);
+  const [hideOptions, setHideOptions] = useState(true);
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
   const formatDate = (userDate) => {
     const date = new Date(userDate);
@@ -47,10 +53,18 @@ export default function PostsListing({
     });
   };
 
+  const toggleOptions = (id) => {
+    setHideOptions(!hideOptions);
+    if (selectedPostId === id) {
+      setSelectedPostId(null);
+    } else {
+      setSelectedPostId(id);
+    }
+  };
+
   return (
-    <div className="flex flex-col border-zinc-300 border-[1px] relative">
-      <NewPost />
-      <Filters />
+    <div className="flex flex-col border-zinc-300 border-b-0 border-[1px] relative mb-40">
+      {!usersPost && !showComments && <Filters />}
       <div className="px-10">
         {postsLoading && (
           <div className="w-[500px] mx-auto pt-10">
@@ -62,15 +76,13 @@ export default function PostsListing({
           </div>
         )}
         {postsDataError && (
-          <p className="w-[500px] mx-auto pt-10">Refresh or Try again later</p>
+          <p className="w-[500px] pt-10 text-center">
+            Refresh or Try again later
+          </p>
         )}
         {!postsLoading && postsData.length === 0 && (
           <p className="w-[500px] mx-auto pt-10 text-center">
-            You dont follow nobody. <br />
-            Go{" "}
-            <Link to="/explore" className=" text-blue-700">
-              #Explore
-            </Link>
+            You dont follow nobody.
           </p>
         )}
         {postsData.map((post) => {
@@ -96,34 +108,70 @@ export default function PostsListing({
 
           return (
             <div key={id} className="w-[500px] mx-auto border-b-[1px] py-7">
-              <Link to={`/${userName}`}>
-                <div className="flex items-center gap-1">
-                  <img
-                    src={avatar}
-                    alt={fullName}
-                    className="w-9 pb-1 mr-[2px]"
-                  />
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-1">
-                      <p className="font-semibold">{fullName}</p>
-                      <div className="flex gap-1 items-center">
-                        {verified && (
-                          <img
-                            src={verifiedIcon}
-                            className="w-4"
-                            alt="verified"
-                          />
-                        )}
-                        <span>•</span>
-                        <p className="font-light text-sm">
-                          {formatDate(createdAt)}
-                        </p>
+              <div className="flex justify-between items-start">
+                <Link to={`/${userName}`}>
+                  <div className="flex items-center gap-1">
+                    <img
+                      src={avatar}
+                      alt={fullName}
+                      className="w-9 pb-1 mr-[2px]"
+                    />
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1">
+                        <p className="font-semibold">{fullName}</p>
+                        <div className="flex gap-1 items-center">
+                          {verified && (
+                            <img
+                              src={verifiedIcon}
+                              className="w-4"
+                              alt="verified"
+                            />
+                          )}
+                          <span>•</span>
+                          <p className="font-light text-sm">
+                            {formatDate(createdAt)}
+                          </p>
+                        </div>
                       </div>
+                      <p className="font-light text-sm -mt-1">{userName}</p>
                     </div>
-                    <p className="font-light text-sm -mt-1">{userName}</p>
                   </div>
-                </div>
-              </Link>
+                </Link>
+                {/*  */}
+                {currentUser.userName === userName && (
+                  <div className="flex gap-3 relative">
+                    <img
+                      src={optionsIcon}
+                      className="w-5 hover:cursor-pointer"
+                      onClick={() => toggleOptions(id)}
+                      alt="options"
+                    />
+                    {currentUser.userName === userName &&
+                      selectedPostId === id && (
+                        <div
+                          className={`${
+                            hideOptions
+                              ? "hidden"
+                              : "flex flex-col gap-1 bg-slate-200/50 backdrop-blur-lg w-max p-2 px-4 rounded absolute top-5 right-0"
+                          }`}
+                        >
+                          <span className="flex gap-2 hover:cursor-pointer">
+                            <img src={editIcon} className="w-5" alt="edit" />
+                            Edit
+                          </span>
+                          <span className="flex gap-2 hover:cursor-pointer">
+                            <img
+                              src={deleteIcon}
+                              className="w-5"
+                              alt="delete"
+                            />
+                            Delete
+                          </span>
+                        </div>
+                      )}
+                  </div>
+                )}
+              </div>
               {/*  */}
               <Link to={`/${userName}/post/${id}`}>
                 <p className="py-1">{content}</p>
@@ -188,6 +236,67 @@ export default function PostsListing({
                   </div>
                 </Link>
               </div>
+              {showComments && (
+                <>
+                  <br />
+                  <hr />
+                  <br />
+                  <p className="font-semibold text-2xl">Comments</p>
+                  <br />
+                  <div className="flex flex-col gap-8 b-[1px]">
+                    {post.comments.length === 0 ? (
+                      <p className="text-center">No Comments</p>
+                    ) : (
+                      post.comments.map((user) => {
+                        const {
+                          id,
+                          userName,
+                          avatar,
+                          fullName,
+                          verified,
+                          content,
+                        } = user;
+                        return (
+                          <div
+                            key={id}
+                            className="flex flex-col gap-1 border-b-[1px] pb-5"
+                          >
+                            <Link to={`/${userName}`}>
+                              <div className="flex items-center gap-1">
+                                <img
+                                  src={avatar}
+                                  alt={fullName}
+                                  className="w-7 pb-1 mr-[2px]"
+                                />
+                                <div className="flex flex-col gap-[2px]">
+                                  <div className="flex items-center gap-1">
+                                    <p className="font-medium text-sm">
+                                      {fullName}
+                                    </p>
+                                    <div className="flex gap-1 items-center">
+                                      {verified && (
+                                        <img
+                                          src={verifiedIcon}
+                                          className="w-3"
+                                          alt="verified"
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <p className="font-light text-xs -mt-1">
+                                    {userName}
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                            <div>{content}</div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           );
         })}
