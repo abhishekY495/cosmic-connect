@@ -14,23 +14,23 @@ export default function Filters() {
   };
 
   return (
-    <div className="flex sticky top-6">
+    <div className="flex sticky top-0 z-[1]">
       <button
         onClick={latestBtnHandler}
-        className={`w-full ${
+        className={`w-full p-2 text-lg text-white ${
           filterByCreatedAt
-            ? "bg-zinc-500/50 backdrop-blur-xl"
-            : "bg-zinc-300/50 backdrop-blur-xl"
+            ? "bg-black/50 backdrop-blur-3xl underline"
+            : "bg-zinc-500/50 backdrop-blur-3xl"
         }`}
       >
         Latest
       </button>
       <button
         onClick={trendingBtnHandler}
-        className={`w-full ${
+        className={`w-full p-2 text-lg text-white ${
           filterByTrending
-            ? "bg-zinc-500/50 backdrop-blur-xl"
-            : "bg-zinc-300/50 backdrop-blur-xl"
+            ? "bg-black/50 backdrop-blur-3xl underline"
+            : "bg-zinc-500/50 backdrop-blur-3xl"
         }`}
       >
         Trending
