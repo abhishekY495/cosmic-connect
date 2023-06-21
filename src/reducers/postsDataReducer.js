@@ -110,6 +110,13 @@ export const postsDataReducer = (state, action) => {
         postsData: newPostsData,
       };
     }
+    case "DELETE_POST": {
+      const postId = action.payload;
+      return {
+        ...state,
+        postsData: state.postsData.filter((post) => post.id !== postId),
+      };
+    }
     default: {
       return state;
     }
