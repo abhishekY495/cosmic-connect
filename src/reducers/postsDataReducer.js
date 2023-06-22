@@ -117,6 +117,24 @@ export const postsDataReducer = (state, action) => {
         postsData: state.postsData.filter((post) => post.id !== postId),
       };
     }
+    case "CREATE_POST": {
+      const newPost = action.payload;
+      const newPostsData = () => {
+        if (state.filterByCreatedAt) {
+          return [...state.postsData, newPost].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+        } else if (state.filterByTrending) {
+          return [...state.postsData, newPost].sort(
+            (a, b) => b.likedBy.length - a.likedBy.length
+          );
+        }
+      };
+      return {
+        ...state,
+        postsData: newPostsData(),
+      };
+    }
     default: {
       return state;
     }
