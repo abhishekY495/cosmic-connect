@@ -182,7 +182,7 @@ export default function PostsListing({
               </div>
               {/*  */}
               <Link to={`/${userName}/post/${id}`}>
-                <p className="py-1">{content}</p>
+                <p className="py-1 whitespace-pre-wrap">{content}</p>
                 {media.image && (
                   <img
                     src={media.image}
