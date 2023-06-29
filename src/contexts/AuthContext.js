@@ -5,7 +5,9 @@ import { UsersDataContext } from "./UsersDataContext";
 
 export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
-  const { usersData } = useContext(UsersDataContext);
+  const {
+    state: { usersData },
+  } = useContext(UsersDataContext);
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
