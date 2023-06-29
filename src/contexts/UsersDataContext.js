@@ -1,32 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer } from "react";
+import { initState, usersDataReducer } from "../reducers/usersDataReducer";
 
 export const UsersDataContext = createContext();
 export const UsersDataContextProvider = ({ children }) => {
-  const API_URL = "https://cosmic-connect-api.abhisheky495.repl.co/usersdata";
-  const [usersData, setUsersData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [usersDataError, setUsersDataError] = useState();
-
-  const getusersData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      setUsersData(data);
-    } catch (error) {
-      console.error(error);
-      setUsersDataError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getusersData();
-  }, []);
+  const [state, dispatch] = useReducer(usersDataReducer, initState);
 
   return (
-    <UsersDataContext.Provider value={{ usersData, loading, usersDataError }}>
+    <UsersDataContext.Provider value={{ state, dispatch }}>
       {children}
     </UsersDataContext.Provider>
   );
