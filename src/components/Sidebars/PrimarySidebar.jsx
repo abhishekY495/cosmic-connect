@@ -28,7 +28,7 @@ export default function PrimarySidebar() {
         >
           New Post
         </div>
-        <Link to={`/${currentUser.userName}`}>Profile</Link>
+        <Link to={`/${currentUser?.userName}`}>Profile</Link>
       </aside>
     </>
   );
