@@ -7,29 +7,45 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import Profile from "./pages/Profile";
-import SinglePost from "./components/SinglePost";
+import SinglePostPage from "./pages/SinglePostPage";
 import { AuthContext } from "./contexts/AuthContext";
 import { PostsDataContext } from "./contexts/PostsDataContext";
+import { UsersDataContext } from "./contexts/UsersDataContext";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(PostsDataContext);
-  const API_URL = "https://cosmic-connect-api.abhisheky495.repl.co/postsdata";
+  const { dispatch: postsDispatch } = useContext(PostsDataContext);
+  const { dispatch: usersDispatch } = useContext(UsersDataContext);
+  const POSTS_API_URL =
+    "https://cosmic-connect-api.abhisheky495.repl.co/postsdata";
+  const USERS_API_URL =
+    "https://cosmic-connect-api.abhisheky495.repl.co/usersdata";
 
   const getPosts = async () => {
-    dispatch({ type: "LOADING" });
+    postsDispatch({ type: "LOADING" });
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(POSTS_API_URL);
       const data = await response.json();
-      dispatch({ type: "GET_POSTS_DATA", payload: data });
-      dispatch({ type: "FILTER_BY_CREATED_AT" });
+      postsDispatch({ type: "GET_POSTS_DATA", payload: data });
+      postsDispatch({ type: "FILTER_BY_CREATED_AT" });
     } catch (error) {
-      dispatch({ type: "GET_POSTS_DATA_ERROR", payload: error });
+      postsDispatch({ type: "GET_POSTS_DATA_ERROR", payload: error });
+    }
+  };
+  const getUsers = async () => {
+    usersDispatch({ type: "USERS_DATA_LOADING" });
+    try {
+      const response = await fetch(USERS_API_URL);
+      const data = await response.json();
+      usersDispatch({ type: "GET_USERS_DATA", payload: data });
+    } catch (error) {
+      usersDispatch({ type: "GET_USERS_DATA_ERROR", payload: error });
     }
   };
 
   useEffect(() => {
     getPosts();
+    getUsers();
   }, []);
 
   return (
@@ -84,7 +100,7 @@ function App() {
           path="/:username/post/:postId"
           element={
             <ProtectedRoute>
-              <SinglePost />
+              <SinglePostPage />
             </ProtectedRoute>
           }
         />
