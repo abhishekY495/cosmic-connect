@@ -1,26 +1,20 @@
-import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 
-import { PostsDataContext } from "../contexts/PostsDataContext";
-import PrimarySidebar from "./Sidebars/PrimarySidebar";
-import SecondarySidebar from "./Sidebars/SecondarySidebar";
-import PostsListing from "./PostsListing";
+import UserInfo from "./PostComponents/UserInfo";
+import PostContent from "./PostComponents/PostContent";
+import SocialInteractionBar from "./PostComponents/SocialInteractionBar";
+import Comments from "./PostComponents/Comments";
 
-export default function SinglePost() {
-  const {
-    state: { postsData },
-  } = useContext(PostsDataContext);
-  const { postId } = useParams();
-
-  const post = postsData.find((post) => post.id === postId);
-
+export default function SinglePost({ post, showComments }) {
   return (
-    <>
-      <div className="flex justify-center gap-10">
-        <PrimarySidebar />
-        <PostsListing postsData={[post]} showComments />
-        <SecondarySidebar />
-      </div>
-    </>
+    <div
+      key={post?.id}
+      className={`${showComments ? "" : "border-b-[1px]"} w-[500px] mx-auto py-7`}
+    >
+      <UserInfo post={post} showComments />
+      <PostContent post={post} />
+      <SocialInteractionBar post={post} />
+      {showComments && <Comments comments={post?.comments} />}
+    </div>
   );
 }
