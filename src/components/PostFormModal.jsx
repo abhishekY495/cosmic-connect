@@ -7,22 +7,60 @@ import crossIcon from "../assets/posts/cross-icon.svg";
 
 export default function PostFormModal({ open, onClose }) {
   const { dispatch } = useContext(PostsDataContext);
-  const { currentUser } = useContext(AuthContext);
+  const {
+    currentUser: { userName, fullName, avatar, verified },
+  } = useContext(AuthContext);
   const [postContent, setPostContent] = useState("");
-  const [userImage, setUserImage] = useState("");
+  const [postMedia, setPostMedia] = useState("");
+  const allowedFileExt = ["png", "gif", "jpeg", "mp4"];
 
-  const handleImage = (e) => {
-    setUserImage(e.target.files[0]);
+  const handleMedia = (e) => {
+    const file = e.target.files[0];
+    let isAllowed = false;
+    allowedFileExt.forEach((ext) => {
+      if (file.type.includes(ext)) {
+        isAllowed = true;
+        setPostMedia(file);
+      }
+    });
+    if (!isAllowed) {
+      alert("File not allowed");
+      setPostMedia("");
+    }
   };
 
-  const { userName, fullName, avatar, verified } = currentUser;
-
   const closeModal = () => {
-    setUserImage("");
+    setPostMedia("");
     onClose();
   };
 
   const uploadPost = () => {
+    const media = () => {
+      if (postMedia) {
+        const fileExt = postMedia.type;
+        if (fileExt.includes("mp4")) {
+          return {
+            image: "",
+            video: URL.createObjectURL(postMedia),
+          };
+        } else if (
+          fileExt.includes("png") ||
+          fileExt.includes("gif") ||
+          fileExt.includes("jpg") ||
+          fileExt.includes("jpeg")
+        ) {
+          return {
+            image: URL.createObjectURL(postMedia),
+            video: "",
+          };
+        }
+      } else {
+        return {
+          image: "",
+          video: "",
+        };
+      }
+    };
     const newPost = {
       id: uuidv4(),
       userName,
@@ -30,10 +68,7 @@ export default function PostFormModal({ open, onClose }) {
       avatar,
       verified,
       content: postContent,
-      media: {
-        image: userImage ? URL.createObjectURL(userImage) : "",
-        video: "",
-      },
+      media: media(),
       createdAt: new Date(),
       updatedAt: "",
       likedBy: [],
@@ -41,7 +76,6 @@ export default function PostFormModal({ open, onClose }) {
       comments: [],
     };
     dispatch({ type: "CREATE_POST", payload: newPost });
-    // dispatch({ type: "FILTER_BY_CREATED_AT" });
     closeModal();
   };
 
@@ -72,19 +106,27 @@ export default function PostFormModal({ open, onClose }) {
           onChange={(e) => setPostContent(e.target.value)}
         ></textarea>
         <div className="flex justify-center">
-          {userImage && (
+          {postMedia && (
             <div className="relative">
               <img
                 src={crossIcon}
-                onClick={() => setUserImage("")}
+                onClick={() => setPostMedia("")}
                 className="absolute right-1 w-6 bg-slate-100/50 backdrop:blur-lg p-1 mt-1 rounded-full hover:cursor-pointer"
                 alt="delete"
               />
-              <img
-                className="w-full h-52 object-cover"
-                src={URL.createObjectURL(userImage)}
-                alt="user upload"
-              />
+              {postMedia.type.includes("mp4") ? (
+                <iframe
+                  src={URL.createObjectURL(postMedia)}
+                  className="w-full h-52"
+                  title="user upload"
+                ></iframe>
+              ) : (
+                <img
+                  className="w-full h-52 object-cover"
+                  src={URL.createObjectURL(postMedia)}
+                  alt="user upload"
+                />
+              )}
             </div>
           )}
         </div>
@@ -94,7 +136,8 @@ export default function PostFormModal({ open, onClose }) {
               className="hidden"
               type="file"
               id="file"
-              onChange={handleImage}
+              accept="image/png, image/gif, image/jpeg, image/jpg, video/mp4, video/mpv"
+              onChange={handleMedia}
             />
             🖼️
           </label>
