@@ -31,6 +31,7 @@ export default function PostFormModal({ open, onClose }) {
 
   const closeModal = () => {
     setPostMedia("");
+    setPostContent("");
     onClose();
   };
 
@@ -83,7 +84,7 @@ export default function PostFormModal({ open, onClose }) {
   return (
     <div
       id="overlay"
-      className="fixed bg-zinc-400/50 w-screen h-screen z-[2]"
+      className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[2]"
       onClick={closeModal}
     >
       <div

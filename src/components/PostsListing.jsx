@@ -16,7 +16,7 @@ export default function PostsListing({
       {!usersPost && !showComments && <Filters />}
       <div className="px-10">
         {postsLoading && (
-          <div className="w-[500px] mx-auto pt-10">
+          <div className="w-[480px] mx-auto pt-10">
             <img
               src={loadingGif}
               className="w-10 m-auto pt-8"
@@ -25,12 +25,12 @@ export default function PostsListing({
           </div>
         )}
         {postsDataError && (
-          <p className="w-[500px] pt-10 text-center">
+          <p className="w-[480px] pt-10 text-center">
             Refresh or Try again later
           </p>
         )}
         {!postsLoading && postsData.length === 0 && (
-          <p className="w-[500px] mx-auto pt-10 text-center">
+          <p className="w-[480px] mx-auto pt-10 text-center">
             You dont follow nobody.
           </p>
         )}

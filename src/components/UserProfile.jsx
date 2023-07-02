@@ -50,8 +50,8 @@ export default function UserProfile({ userProfile, username }) {
         )}
       </div>
       <p className="text-sm">@{userProfile?.userName}</p>
-      <p className="w-[500px]">{userProfile?.bio}</p>
-      <p className="w-[500px]">{userProfile?.website}</p>
+      <p className="w-[540px]">{userProfile?.bio}</p>
+      <p className="w-[540px]">{userProfile?.website}</p>
       <div className="flex gap-4">
         <p>
           <b>{userProfile?.followers.length}</b>Followers
