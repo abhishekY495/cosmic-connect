@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 
 import optionsIcon from "../../assets/posts/options-icon.svg";
 import deleteIcon from "../../assets/posts/delete-icon.svg";
-import editIcon from "../../assets/posts/edit-icon.svg";
 import { PostsDataContext } from "../../contexts/PostsDataContext";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -41,17 +40,13 @@ export default function PostSettings({ post }) {
               <div
                 className={`${
                   hideOptions
-                    ? "hidden"
+                    ? "hidden" 
                     : "flex flex-col gap-1 bg-slate-200/50 border-[1px] backdrop-blur-md w-max p-2 px-4 rounded absolute top-5 right-0"
                 }`}
               >
-                <span className="flex gap-2 hover:cursor-pointer">
-                  <img src={editIcon} className="w-5" alt="edit" />
-                  Edit
-                </span>
                 <span
-                  className="flex gap-2 hover:cursor-pointer"
                   onClick={() => deletePost(post?.id)}
+                  className="flex gap-2 hover:cursor-pointer"
                 >
                   <img src={deleteIcon} className="w-5" alt="delete" />
                   Delete
