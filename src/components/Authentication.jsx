@@ -5,14 +5,14 @@ import { toast } from "react-hot-toast";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function Authentication({ signup, login }) {
-  const { signUpUser, loginUser, guestLogin } = useContext(AuthContext);
+  const { signUpUser, loginUser } = useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const guestCredentials = {
-    email: "abhishek@testing.com",
-    password: "abhishekY495",
+    email: "johndoe@gmail.com",
+    password: "johndoe77",
   };
 
   const signUpBtnHandler = () => {
@@ -55,7 +55,7 @@ export default function Authentication({ signup, login }) {
     setEmail(guestCredentials.email);
     setPassword(guestCredentials.password);
     toast.promise(
-      guestLogin(guestCredentials.email, guestCredentials.password),
+      loginUser(guestCredentials.email, guestCredentials.password),
       {
         loading: "Logging In",
         success: "Logged In",

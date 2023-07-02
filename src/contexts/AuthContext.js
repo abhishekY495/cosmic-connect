@@ -76,23 +76,6 @@ export const AuthContextProvider = ({ children }) => {
     });
   };
 
-  const guestLogin = (email, password) => {
-    return new Promise((resolve, reject) => {
-      usersData.forEach((user) => {
-        if (user.email === email && user.password === password) {
-          setTimeout(() => {
-            resolve(localStorage.setItem("currentUser", JSON.stringify(user)));
-            navigate("/home");
-          }, 1500);
-        } else {
-          setTimeout(() => {
-            reject("Something went wrong. Try again later");
-          }, 1500);
-        }
-      });
-    });
-  };
-
   const logoutUser = () => {
     localStorage.clear();
     navigate("/login");
@@ -100,7 +83,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, signUpUser, loginUser, guestLogin, logoutUser }}
+      value={{ currentUser, signUpUser, loginUser, logoutUser }}
     >
       {children}
     </AuthContext.Provider>
