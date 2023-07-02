@@ -11,7 +11,7 @@ export default function PrimarySidebar() {
   return (
     <>
       <PostFormModal open={openModal} onClose={() => setOpenModal(false)} />
-      <aside className="w-[220px] border-[1px] border-zinc-300 sticky top-0 h-screen flex flex-col gap-4 text-end">
+      <aside className="w-[220px] border-r-[1px] pr-3 sticky top-0 h-screen flex flex-col gap-4 text-end">
         <Link to="/home">
           <div className="flex gap-1 justify-end">
             <p>Cosmic</p>
