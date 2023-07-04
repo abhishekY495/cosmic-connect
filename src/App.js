@@ -15,7 +15,10 @@ import { UsersDataContext } from "./contexts/UsersDataContext";
 function App() {
   const { currentUser } = useContext(AuthContext);
   const { dispatch: postsDispatch } = useContext(PostsDataContext);
-  const { dispatch: usersDispatch } = useContext(UsersDataContext);
+  const {
+    state: { usersData },
+    dispatch: usersDispatch,
+  } = useContext(UsersDataContext);
   const POSTS_API_URL =
     "https://cosmic-connect-api.abhisheky495.repl.co/postsdata";
   const USERS_API_URL =
@@ -42,6 +45,12 @@ function App() {
       usersDispatch({ type: "GET_USERS_DATA_ERROR", payload: error });
     }
   };
+
+  const defaultUserData = usersData?.find(
+    (user) => user.userName === currentUser?.userName
+  );
+  defaultUserData !== undefined &&
+    localStorage.setItem("currentUser", JSON.stringify(defaultUserData));
 
   useEffect(() => {
     getPosts();
