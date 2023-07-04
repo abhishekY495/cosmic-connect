@@ -12,7 +12,7 @@ export default function PostFormModal({ open, onClose }) {
   } = useContext(AuthContext);
   const [postContent, setPostContent] = useState("");
   const [postMedia, setPostMedia] = useState("");
-  const allowedFileExt = ["png", "gif", "jpeg", "mp4"];
+  const allowedFileExt = ["png", "gif", "jpeg", "jpg", "mp4", "mkv", "mpv"];
 
   const handleMedia = (e) => {
     const file = e.target.files[0];
@@ -137,7 +137,7 @@ export default function PostFormModal({ open, onClose }) {
               className="hidden"
               type="file"
               id="file"
-              accept="image/png, image/gif, image/jpeg, image/jpg, video/mp4, video/mpv"
+              accept="image/png, image/gif, image/jpeg, image/jpg, video/mp4, video/mkv, video/mpv"
               onChange={handleMedia}
             />
             🖼️
