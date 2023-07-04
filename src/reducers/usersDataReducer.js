@@ -100,5 +100,22 @@ export const usersDataReducer = (state, action) => {
         usersData: updatedUsersData,
       };
     }
+    case "UPDATE_USER_PROFILE": {
+      const { updatedUserProfile, currentUser } = action.payload;
+      const updatedUsersData = state.usersData.map((user) => {
+        if (user.userName === currentUser.userName) {
+          return {
+            ...updatedUserProfile,
+          };
+        } else {
+          return user;
+        }
+      });
+      localStorage.setItem("currentUser", JSON.stringify(updatedUserProfile));
+      return {
+        ...state,
+        usersData: updatedUsersData,
+      };
+    }
   }
 };
