@@ -6,20 +6,21 @@ export default function PostContent({ post }) {
     <>
       <Link to={`/${post?.userName}/post/${post?.id}`}>
         <p className="py-1 whitespace-pre-wrap">{post?.content}</p>
-        {post?.media.image && (
-          <img
-            src={post?.media.image}
-            alt={`post by ${post?.fullName}`}
-            className="object-contain w-full h-96 bg-zinc-950"
-          />
-        )}
-        {post?.media.video && (
+        {post?.media && post?.isVideo ? (
           <iframe
-            src={post?.media.video}
-            title={post?.media.content}
+            src={post?.media}
+            title={`post video by ${post?.fullName}`}
             className="w-full h-96"
             allowFullScreen
           ></iframe>
+        ) : (
+          post?.media && (
+            <img
+              src={post?.media}
+              alt={`post image by ${post?.fullName}`}
+              className="object-contain w-full h-96 bg-zinc-950"
+            />
+          )
         )}
       </Link>
     </>

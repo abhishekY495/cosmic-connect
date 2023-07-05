@@ -135,6 +135,20 @@ export const postsDataReducer = (state, action) => {
         postsData: newPostsData(),
       };
     }
+    case "UPDATE_POST": {
+      const { postToEdit, updatedPost } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.id === postToEdit.id) {
+          return updatedPost;
+        } else {
+          return post;
+        }
+      });
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
     default: {
       return state;
     }
