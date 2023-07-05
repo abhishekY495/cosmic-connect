@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import verifiedIcon from "../../assets/profile/verified.svg";
+import editIcon from "../../assets/posts/edit-icon.svg";
 import PostSettings from "./PostSettings";
 
 export default function UserInfo({ post, showComments }) {
@@ -35,6 +36,12 @@ export default function UserInfo({ post, showComments }) {
                 )}
                 <span>•</span>
                 <p className="font-light text-sm">{postCreatedDate}</p>
+                {post?.edited && (
+                  <div className="flex gap-1">
+                    <span>•</span>
+                    <img src={editIcon} className="w-4 mb-1 opacity-40" alt="edit" />
+                  </div>
+                )}
               </div>
             </div>
             <p className="font-light text-sm -mt-1">{post?.userName}</p>
