@@ -28,7 +28,7 @@ export default function Profile() {
   return (
     <div className="flex justify-center gap-10">
       <PrimarySidebar />
-      <div className="w-[520px]">
+      <div className="w-[552px]">
         {usersDataLoading && <p>Getting user data</p>}
         {!userProfile ? (
           <div className="pb-2 sticky top-0 bg-slate-400/80 backdrop-blur-3xl z-[1]">
