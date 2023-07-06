@@ -60,7 +60,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
         verified,
         content: postContent,
         media: postMedia,
-        isVideo: selectedFile.type.includes("mp4") ? true : false,
+        isVideo: selectedFile && selectedFile.type.includes("mp4") ? true : false,
         createdAt: new Date(),
         updatedAt: "",
         likedBy: [],
