@@ -28,18 +28,22 @@ export default function Profile() {
   return (
     <div className="flex justify-center gap-10">
       <PrimarySidebar />
-      <div className="">
+      <div className="w-[520px]">
         {usersDataLoading && <p>Getting user data</p>}
-        {!usersData ? (
+        {!userProfile ? (
           <div className="pb-2 sticky top-0 bg-slate-400/80 backdrop-blur-3xl z-[1]">
-            <p className="font-medium text-center py-10">
+            <p className="font-medium text-lg text-center py-10">
               User profile not found.
             </p>
           </div>
         ) : (
           <>
             <UserProfile username={username} userProfile={userProfile} />
-            <PostsListing postsData={userPosts} usersPost />
+            <PostsListing
+              postsData={userPosts}
+              usersPost
+              userProfile={userProfile}
+            />
           </>
         )}
       </div>

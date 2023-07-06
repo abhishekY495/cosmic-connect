@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import loadingGif from "../assets/posts/loadingGif.gif";
 import SinglePost from "./SinglePost";
 import Filters from "./Filters";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function PostsListing({
   postsData,
@@ -10,7 +11,10 @@ export default function PostsListing({
   postsDataError,
   usersPost,
   showComments,
+  userProfile,
 }) {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="flex flex-col relative pb-40 border-[1px] border-b-0">
       {!usersPost && !showComments && <Filters />}
@@ -29,10 +33,22 @@ export default function PostsListing({
             Refresh or Try again later
           </p>
         )}
-        {!postsLoading && postsData.length === 0 && (
+        {userProfile?.userName === currentUser?.userName &&
+        postsData?.length === 0 ? (
           <p className="w-[480px] mx-auto pt-10 text-center">
-            You dont follow nobody.
+            Post Something...
           </p>
+        ) : usersPost && postsData.length === 0 ? (
+          <p className="w-[480px] mx-auto pt-10 text-center">
+            {userProfile.fullName} hasn't posted anything.
+          </p>
+        ) : (
+          !postsLoading &&
+          postsData.length === 0 && (
+            <p className="w-[480px] mx-auto pt-10 text-center">
+              You follow nobody...
+            </p>
+          )
         )}
         {postsData.map((post, index) => {
           return <SinglePost key={index} post={post} />;
