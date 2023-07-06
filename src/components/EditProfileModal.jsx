@@ -2,22 +2,25 @@ import React, { useContext, useState } from "react";
 
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import { AuthContext } from "../contexts/AuthContext";
+import crossIcon from "../assets/profile/cross-icon.svg";
 
 export default function EditProfileModal({ open, onClose, userProfile }) {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(UsersDataContext);
-  const [fullName, setFullName] = useState(userProfile && userProfile.fullName);
-  const [avatar, setAvatar] = useState(userProfile && userProfile.avatar);
-  const [bio, setBio] = useState(userProfile && userProfile.bio);
-  const [website, setWebsite] = useState(userProfile && userProfile.website);
+  const [fullName, setFullName] = useState(
+    userProfile && userProfile?.fullName
+  );
+  const [avatar, setAvatar] = useState(userProfile && userProfile?.avatar);
+  const [bio, setBio] = useState(userProfile && userProfile?.bio);
+  const [website, setWebsite] = useState(userProfile && userProfile?.website);
   const allowedFileExt = ["png", "jpeg", "jpg"];
 
   const closeModal = () => {
     onClose();
-    setAvatar(userProfile.avatar);
-    setFullName(userProfile.fullName);
-    setBio(userProfile.bio);
-    setWebsite(userProfile.website);
+    setAvatar(userProfile?.avatar);
+    setFullName(userProfile?.fullName);
+    setBio(userProfile?.bio);
+    setWebsite(userProfile?.website);
   };
 
   const handleMedia = (e) => {
@@ -60,9 +63,15 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
       >
         <div
           id="edit-profile-modal"
-          className="bg-white flex flex-col gap-3 w-[350px] m-auto p-5 mt-8"
+          className="bg-white flex flex-col gap-3 w-[350px] m-auto p-5 mt-8 relative"
           onClick={(e) => e.stopPropagation()}
         >
+          <img
+            src={crossIcon}
+            className="w-6 bg-slate-200 p-1 absolute right-3 top-3 rounded-full hover:cursor-pointer"
+            alt="cross"
+            onClick={closeModal}
+          />
           <img
             src={avatar}
             className="w-[50%] h-[160px] object-cover m-auto rounded-full"
@@ -99,6 +108,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
               cols="30"
               onChange={(e) => setBio(e.target.value)}
               defaultValue={bio}
+              maxLength={40}
             ></textarea>
           </label>
           <label>
