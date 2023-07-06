@@ -19,9 +19,10 @@ export default function UserProfile({ userProfile, username }) {
   } = useContext(UsersDataContext);
   const [openModal, setOpenModal] = useState(false);
 
-  const currentUserProfile = usersData?.find(
-    (user) => user.userName === currentUser.userName
-  );
+  const currentUserProfile = usersData?.find((user) => {
+    return user?.userName === currentUser?.userName;
+  });
+
   const currentUsersFollowing = currentUserProfile?.following;
   const hasFollowed = currentUsersFollowing?.some((followingUser) => {
     return followingUser.userName === username;
@@ -63,7 +64,7 @@ export default function UserProfile({ userProfile, username }) {
                 )}
               </div>
               <p className="text-sm -mt-[2px]">@{userProfile?.userName}</p>
-              {currentUser.userName === userProfile?.userName ? (
+              {currentUser?.userName === userProfile?.userName ? (
                 <button
                   onClick={() => setOpenModal(true)}
                   className=" w-24 bg-zinc-500 text-white text-sm p-1 px-3 rounded-md my-2"
@@ -87,8 +88,7 @@ export default function UserProfile({ userProfile, username }) {
               )}
             </div>
           </div>
-
-          {currentUser.userName === userProfile?.userName && (
+          {currentUser?.userName === userProfile?.userName && (
             <img
               className="w-7 h-fit bg-red-400 p-1 rounded-md hover:cursor-pointer"
               onClick={logoutBtnHandler}
@@ -98,10 +98,12 @@ export default function UserProfile({ userProfile, username }) {
           )}
         </div>
         {/*  */}
-        <div className="w-[540px] flex gap-1 my-[2px]">
-          <img src={bioIcon} className="w-[15px]" alt="website" />
-          <p>{userProfile?.bio}</p>
-        </div>
+        {userProfile?.bio && (
+          <div className="w-[540px] flex gap-1 my-[2px]">
+            <img src={bioIcon} className="w-[15px]" alt="website" />
+            <p>{userProfile?.bio}</p>
+          </div>
+        )}
         {userProfile?.website && (
           <div className="flex gap-1">
             <img src={linkIcon} className="w-[15px]" alt="website" />

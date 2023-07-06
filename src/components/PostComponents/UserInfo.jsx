@@ -25,7 +25,7 @@ export default function UserInfo({ post, showComments }) {
           <img
             src={post?.avatar}
             alt={post?.fullName}
-            className="w-9 pb-1 mr-[2px]"
+            className="w-9 pb-1 mr-[2px] rounded-full"
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
@@ -44,7 +44,7 @@ export default function UserInfo({ post, showComments }) {
                 )}
               </div>
             </div>
-            <p className="font-light text-sm -mt-1">{post?.userName}</p>
+            <p className="font-light text-sm -mt-1">@{post?.userName}</p>
           </div>
         </div>
       </Link>
