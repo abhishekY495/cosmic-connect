@@ -117,5 +117,15 @@ export const usersDataReducer = (state, action) => {
         usersData: updatedUsersData,
       };
     }
+    case "ADD_NEW_USER": {
+      const newUserDetails = action.payload;
+      return {
+        ...state,
+        usersData: [...state.usersData, newUserDetails],
+      };
+    }
+    default: {
+      return state;
+    }
   }
 };

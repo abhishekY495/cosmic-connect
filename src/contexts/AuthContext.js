@@ -7,11 +7,20 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const {
     state: { usersData },
+    dispatch,
   } = useContext(UsersDataContext);
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  const signUpUser = (fullName, userName, email, password) => {
+  const signUpUser = (
+    avatar,
+    fullName,
+    userName,
+    bio,
+    website,
+    email,
+    password
+  ) => {
     return new Promise((resolve, reject) => {
       let isUserPresent = false;
       usersData.forEach((user) => {
@@ -26,17 +35,18 @@ export const AuthContextProvider = ({ children }) => {
       //
       if (!isUserPresent) {
         const newUser = {
+          avatar,
           userName,
           fullName,
           email,
           password,
+          bio,
+          website,
           verified: false,
-          bio: "",
-          avatar: "",
-          website: "",
           followers: [],
           following: [],
         };
+        dispatch({ type: "ADD_NEW_USER", payload: newUser });
         //
         setTimeout(() => {
           resolve(newUser);

@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
 
 import { AuthContext } from "../contexts/AuthContext";
+import randomIcon from "../assets/randomIcon.svg";
 
 export default function Authentication({ signup, login }) {
   const { signUpUser, loginUser } = useContext(AuthContext);
@@ -10,6 +12,12 @@ export default function Authentication({ signup, login }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [randomSeed, setRandomSeed] = useState(uuidv4());
+  const [bio, setBio] = useState("");
+  const [website, setWebsite] = useState("");
+  const [avatar, setAvatar] = useState(
+    `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${randomSeed}`
+  );
   const guestCredentials = {
     email: "johndoe@gmail.com",
     password: "johndoe77",
@@ -26,11 +34,14 @@ export default function Authentication({ signup, login }) {
       toast.error("Password should be greater than 6 characters");
     } else {
       try {
-        toast.promise(signUpUser(fullName, userName, email, password), {
-          loading: "Signing Up",
-          success: "Signed Up",
-          error: (err) => `${err}`,
-        });
+        toast.promise(
+          signUpUser(avatar, fullName, userName, bio, website, email, password),
+          {
+            loading: "Signing Up",
+            success: "Signed Up",
+            error: (err) => `${err}`,
+          }
+        );
       } catch (error) {
         toast.error(error);
       }
@@ -64,11 +75,30 @@ export default function Authentication({ signup, login }) {
     );
   };
 
+  const generateRandomAvatar = () => {
+    const url = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${randomSeed}`;
+    setRandomSeed(uuidv4());
+    setAvatar(url);
+  };
+
   return (
     <>
-      <div className="flex flex-col w-[320px] bg-slate-200 m-auto p-5 py-10 gap-2 rounded">
+      <div className="flex flex-col w-[320px] bg-slate-200 m-auto p-5 gap-2 mt-5 rounded">
         {signup && (
           <>
+            <div className="relative">
+              <img
+                src={avatar}
+                className="w-32 h-32 m-auto rounded-full"
+                alt="user avatar"
+              />
+              <img
+                src={randomIcon}
+                className="w-7 bg-white rounded-full p-1 absolute bottom-0 right-20 hover:cursor-pointer"
+                onClick={generateRandomAvatar}
+                alt="random"
+              />
+            </div>
             <label>
               <p>Full Name</p>
               <input
@@ -85,6 +115,25 @@ export default function Authentication({ signup, login }) {
                 value={userName}
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
+              />
+            </label>
+            <label>
+              <p>Bio</p>
+              <textarea
+                className="border-zinc-300 w-full rounded-md border-2"
+                value={bio}
+                type="text"
+                maxLength={40}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </label>
+            <label>
+              <p>Website</p>
+              <input
+                className="border-zinc-300 w-full rounded-md border-2"
+                value={website}
+                type="text"
+                onChange={(e) => setWebsite(e.target.value)}
               />
             </label>
           </>
@@ -108,44 +157,44 @@ export default function Authentication({ signup, login }) {
           />
         </label>
         {signup && (
-          <button
-            className="bg-slate-400 p-1 w-full rounded"
-            onClick={signUpBtnHandler}
-          >
-            Sign Up
-          </button>
-        )}
-        {login && (
-          <div className="flex justify-center gap-1">
+          <>
             <button
               className="bg-slate-400 p-1 w-full rounded"
-              onClick={loginBtnHandler}
+              onClick={signUpBtnHandler}
             >
-              Login
+              Sign Up
             </button>
-            <button
-              className="bg-orange-400 p-1 w-full rounded"
-              onClick={guestLoginBtnHandler}
-            >
-              Guest Login
-            </button>
-          </div>
-        )}
-        {signup && (
-          <p className="mt-3">
-            Have an Account?{" "}
-            <Link className="underline" to="/login">
-              Login
-            </Link>
-          </p>
+            <p className="mt-3">
+              Have an Account?{" "}
+              <Link className="underline" to="/login">
+                Login
+              </Link>
+            </p>
+          </>
         )}
         {login && (
-          <p className="mt-3">
-            Dont have an Account?{" "}
-            <Link className="underline" to="/signup">
-              Sign Up
-            </Link>
-          </p>
+          <>
+            <div className="flex flex-col gap-2">
+              <button
+                className="bg-slate-400 p-1 w-full rounded"
+                onClick={loginBtnHandler}
+              >
+                Login
+              </button>
+              <button
+                className="bg-orange-400 p-1 w-full rounded"
+                onClick={guestLoginBtnHandler}
+              >
+                Guest Login
+              </button>
+            </div>
+            <p className="mt-3">
+              Dont have an Account?{" "}
+              <Link className="underline" to="/signup">
+                Sign Up
+              </Link>
+            </p>
+          </>
         )}
       </div>
     </>
