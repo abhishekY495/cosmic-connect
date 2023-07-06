@@ -22,13 +22,13 @@ export default function SecondarySidebar() {
   const suggestedUsers = usersData?.filter((user) => {
     return (
       !currentUsersFollowing
-        .map((followingUser) => followingUser.userName)
-        .includes(user.userName) &&
+        ?.map((followingUser) => followingUser.userName)
+        ?.includes(user.userName) &&
       !user.userName.includes(currentUser.userName)
     );
   });
 
-  const searchedUsers = usersData.filter((user) => {
+  const searchedUsers = usersData?.filter((user) => {
     return (
       user.userName.toLowerCase().includes(searchTerm) ||
       user.fullName.toLowerCase().includes(searchTerm)
@@ -50,44 +50,47 @@ export default function SecondarySidebar() {
       <input
         type="text"
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="border-[1px] w-full rounded-md pl-1"
+        className="border-[1px] w-full rounded-md pl-2 py-1 my-2"
         placeholder="Search Users..."
       />
-      <div>
-        {usersList.map((user, index) => {
-          if (index < 5) {
-            return (
-              <div
-                key={user.userName}
-                className="flex justify-between items-center"
+      <div className="flex flex-col gap-2">
+        {usersList?.slice(0, 5)?.map((user) => {
+          return (
+            <div
+              key={user.userName}
+              className="flex justify-between items-center border-b-[1px] pb-1"
+            >
+              <Link
+                to={`/${user.userName}`}
+                className="flex items-center gap-2"
               >
-                <Link
-                  to={`/${user.userName}`}
-                  className="flex items-center gap-2"
-                >
-                  <img src={user.avatar} className="w-9" alt="" />
-                  <div>
-                    <div className="flex gap-1">
-                      <p className="w-max font-medium">{user.fullName}</p>
-                      {user.verified && (
-                        <img src={verifiedIcon} className="w-4" alt="" />
-                      )}
-                    </div>
-                    <p className="font-light text-sm text-gray-500">
-                      @{user.userName}
-                    </p>
+                <img src={user.avatar} className="w-9" alt="" />
+                <div>
+                  <div className="flex gap-1">
+                    <p className="w-max font-medium">{user.fullName}</p>
+                    {user.verified && (
+                      <img src={verifiedIcon} className="w-4" alt="" />
+                    )}
                   </div>
-                </Link>
-                <img
-                  src={followIcon}
-                  onClick={() => followUser(user.userName)}
-                  className="w-7 p-1 bg-zinc-600 rounded-full hover:cursor-pointer"
-                  alt=""
-                />
-              </div>
-            );
-          }
+                  <p className="font-light text-sm text-gray-500 -mt-1">
+                    @{user.userName}
+                  </p>
+                </div>
+              </Link>
+              <img
+                src={followIcon}
+                onClick={() => followUser(user.userName)}
+                className="w-7 p-1 bg-zinc-600 rounded-full hover:cursor-pointer"
+                alt=""
+              />
+            </div>
+          );
         })}
+        {usersList.length === 0 && (
+          <div className="flex justify-between items-center">
+            No users found.
+          </div>
+        )}
       </div>
     </div>
   );
