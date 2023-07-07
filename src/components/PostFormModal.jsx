@@ -76,7 +76,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
   return (
     <div
       id="overlay"
-      className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[2]"
+      className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[20]"
       onClick={closeModal}
     >
       <div

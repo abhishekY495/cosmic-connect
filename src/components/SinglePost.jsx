@@ -17,7 +17,7 @@ export default function SinglePost({ post, showComments }) {
       key={post?.id}
       className={`${
         showComments ? "" : "border-b-[1px]"
-      } w-[550px] mx-auto p-7`}
+      } w-[550px] mx-auto p-7 max-[550px]:w-[100%]`}
     >
       <UserInfo post={post} showComments />
       <PostContent post={post} />
@@ -25,7 +25,7 @@ export default function SinglePost({ post, showComments }) {
       {showComments && <Comments comments={post?.comments} />}
     </div>
   ) : (
-    <div className="flex flex-col items-center border-b-[1px] w-[550px] mx-auto p-7">
+    <div className="flex flex-col items-center border-b-[1px] w-[550px] mx-auto p-7 max-[550px]:w-[100%]">
       <img src={loadingGif} className="w-10" alt="infinite loader" />
       {postsDataError && (
         <>

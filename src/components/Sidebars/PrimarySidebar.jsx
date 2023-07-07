@@ -3,41 +3,78 @@ import { NavLink } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import PostFormModal from "../PostFormModal";
+import homeIcon from "../../assets/navbar/homeIcon.svg";
+import exploreIcon from "../../assets/navbar/exploreIcon.svg";
+import searchIcon from "../../assets/navbar/searchIcon.svg";
+import newPostIcon from "../../assets/navbar/newPostIcon.svg";
 
 export default function PrimarySidebar() {
   const { currentUser } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
   const navLinkStyle = ({ isActive }) =>
     !isActive
-      ? "px-5 w-[115px] text-end py-1 rounded-lg hover:cursor-pointer"
-      : "px-5 w-[115px] text-end py-1 rounded-lg hover:cursor-pointer bg-zinc-300 font-medium";
+      ? "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1"
+      : "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1 bg-zinc-400 font-medium";
+
+  const mediaQueries = `
+    max-[1180px]:justify-end max-[1180px]:w-fit
+    max-[800px]:border-none max-[800px]:flex-row max-[800px]:fixed 
+    max-[800px]:bg-slate-300 
+    max-[800px]:h-[50px] max-[800px]:top-[93.2%] 
+    max-[800px]:z-10 max-[800px]:items-center max-[800px]:w-[550px]
+    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:justify-around max-[550px]:w-[100%]`;
 
   return (
     <>
       <PostFormModal open={openModal} onClose={() => setOpenModal(false)} />
-      <aside className="w-[220px] border-r-[1px] border-zinc-300 pr-3 pt-2 sticky top-0 h-screen flex flex-col gap-4 items-end">
+      <aside
+        className={`w-[220px] border-r-[1px] border-zinc-300 pr-3 py-3 pb-5 sticky top-0 h-screen flex flex-col gap-4 items-end ${mediaQueries}`}
+      >
         <NavLink className={navLinkStyle} to="/home">
-          Home
+          <p className="max-[800px]:hidden">Home</p>
+          <img
+            className="w-7 hidden max-[800px]:block"
+            src={homeIcon}
+            alt="home"
+          />
         </NavLink>
         <NavLink className={navLinkStyle} to="/explore">
-          Explore
+          <p className="max-[800px]:hidden">Explore</p>
+          <img
+            className="w-7 hidden max-[800px]:block"
+            src={exploreIcon}
+            alt="explore"
+          />
         </NavLink>
+        <div className="px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg hidden max-[1180px]:block max-[800px]:p-0">
+          <p className="max-[800px]:hidden">Search</p>
+          <img
+            className="w-7 hidden max-[800px]:block"
+            src={searchIcon}
+            alt="search"
+          />
+        </div>
         <div
-          className="hover:cursor-pointer bg-blue-200 hover:bg-blue-300 w-[115px] px-5 py-1 font-medium rounded-lg"
+          className="hover:cursor-pointer bg-blue-200 hover:bg-blue-300 w-[115px] max-[800px]:w-fit max-[800px]:bg-slate-300 px-5 max-[800px]:p-0 py-1 font-medium rounded-lg"
           onClick={() => setOpenModal(true)}
         >
-          <p>New Post</p>
+          <p className="max-[800px]:hidden">New Post</p>
+          <img
+            className="w-7 hidden max-[800px]:block"
+            src={newPostIcon}
+            alt="new post"
+          />
         </div>
         <NavLink
-          className="flex gap-2 bg-slate-300 hover:bg-slate-200 px-5 py-2 rounded-lg"
+          className="flex gap-2 bg-slate-300 hover:opacity-90 px-5 py-2 rounded-lg max-[800px]:bg-inherit max-[800px]:p-0"
           to={`/${currentUser?.userName}`}
         >
           <img
             src={currentUser?.avatar}
-            className="w-10 rounded-full"
+            className="w-7 rounded-full"
             alt="user avatar"
           />
-          <div>
+          <div className="max-[800px]:hidden">
             <p>{currentUser?.fullName}</p>
             <p className="font-extralight -mt-1 text-sm">
               @{currentUser?.userName}

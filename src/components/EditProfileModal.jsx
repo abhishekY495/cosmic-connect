@@ -58,12 +58,12 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
     return (
       <div
         id="overlay-profile"
-        className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[2]"
+        className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[20]"
         onClick={closeModal}
       >
         <div
           id="edit-profile-modal"
-          className="bg-white flex flex-col gap-3 w-[350px] m-auto p-5 mt-8 relative"
+          className="bg-white flex flex-col gap-3 w-[320px] m-auto p-5 mt-8 relative"
           onClick={(e) => e.stopPropagation()}
         >
           <img

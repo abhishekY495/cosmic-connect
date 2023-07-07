@@ -99,7 +99,7 @@ export default function UserProfile({ userProfile, username }) {
         </div>
         {/*  */}
         {userProfile?.bio && (
-          <div className="w-[540px] flex gap-1 my-[2px]">
+          <div className="w-[540px] max-[550px]:w-[100%] flex gap-1 my-[2px]">
             <img src={bioIcon} className="w-[15px]" alt="website" />
             <p>{userProfile?.bio}</p>
           </div>

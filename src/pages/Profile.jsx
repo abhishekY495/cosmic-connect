@@ -29,7 +29,7 @@ export default function Profile() {
   return (
     <div className="flex justify-center gap-10">
       <PrimarySidebar />
-      <div className="w-[552px]">
+      <div className="w-[552px] max-[550px]:w-[100%]">
         {usersDataLoading && (
           <div>
             <img
