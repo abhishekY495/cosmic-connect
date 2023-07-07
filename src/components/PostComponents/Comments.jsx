@@ -24,7 +24,7 @@ export default function Comments({ comments }) {
                     <img
                       src={avatar}
                       alt={fullName}
-                      className="w-[30px] mr-[2px]"
+                      className="w-[30px] mr-[2px] rounded-full"
                     />
                     <div className="flex flex-col gap-[2px]">
                       <div className="flex items-center gap-1">
@@ -39,11 +39,11 @@ export default function Comments({ comments }) {
                           )}
                         </div>
                       </div>
-                      <p className="font-light text-xs -mt-1">{userName}</p>
+                      <p className="font-light text-xs -mt-1">@{userName}</p>
                     </div>
                   </div>
                 </Link>
-                <div>{content}</div>
+                <div className="whitespace-pre-wrap">{content}</div>
               </div>
             );
           })

@@ -38,19 +38,21 @@ export default function PostsListing({
           <p className="w-[550px] mx-auto pt-10 text-center">
             Post Something...
           </p>
-        ) : usersPost && postsData.length === 0 ? (
-          <p className="w-[550px] mx-auto pt-10 text-center">
-            {userProfile.fullName} hasn't posted anything.
-          </p>
+        ) : usersPost && postsData?.length === 0 ? (
+          userProfile && (
+            <p className="w-[550px] mx-auto pt-10 text-center">
+              {userProfile?.fullName} hasn't posted anything.
+            </p>
+          )
         ) : (
           !postsLoading &&
-          postsData.length === 0 && (
+          postsData?.length === 0 && (
             <p className="w-[550px] mx-auto pt-10 text-center">
               You follow nobody...
             </p>
           )
         )}
-        {postsData.map((post, index) => {
+        {postsData?.map((post, index) => {
           return <SinglePost key={index} post={post} />;
         })}
       </div>
