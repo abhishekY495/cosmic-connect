@@ -7,17 +7,15 @@ export default function PostContent({ post }) {
       <Link to={`/${post?.userName}/post/${post?.id}`}>
         <p className="py-1 whitespace-pre-wrap">{post?.content}</p>
         {post?.media && post?.isVideo ? (
-          <iframe
-            src={post?.media}
-            title={`post video by ${post?.fullName}`}
-            className="w-full h-96"
-            allowFullScreen
-          ></iframe>
+          <video className="w-full h-96 bg-black" controls>
+            <source src={post?.media} type="video/mp4" />
+            Sorry, your browser doesn't support videos.
+          </video>
         ) : (
           post?.media && (
             <img
               src={post?.media}
-              alt={`post image by ${post?.fullName}`}
+              alt={`post by ${post?.fullName}`}
               className="object-contain w-full h-96 bg-zinc-950"
             />
           )

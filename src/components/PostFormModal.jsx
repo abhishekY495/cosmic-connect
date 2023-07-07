@@ -46,7 +46,8 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
         ...postToEdit,
         content: postContent,
         media: postMedia,
-        isVideo: selectedFile && selectedFile.type.includes("mp4") ? true : false,
+        isVideo:
+          selectedFile && selectedFile.type.includes("mp4") ? true : false,
         edited: true,
       };
       dispatch({ type: "UPDATE_POST", payload: { postToEdit, updatedPost } });
@@ -60,7 +61,8 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
         verified,
         content: postContent,
         media: postMedia,
-        isVideo: selectedFile && selectedFile.type.includes("mp4") ? true : false,
+        isVideo:
+          selectedFile && selectedFile.type.includes("mp4") ? true : false,
         createdAt: new Date(),
         updatedAt: "",
         likedBy: [],
@@ -81,7 +83,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
     >
       <div
         id="modal-container"
-        className="max-w-md m-auto mt-16 p-4 bg-slate-100 rounded-md"
+        className="w-[320px] m-auto mt-16 p-4 bg-slate-100 rounded-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between">
@@ -94,7 +96,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
           />
         </div>
         <textarea
-          cols="50"
+          cols="34"
           rows="5"
           defaultValue={postContent}
           onChange={(e) => setPostContent(e.target.value)}
@@ -125,7 +127,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
             </div>
           )}
         </div>
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 my-2">
           <label htmlFor="file" className="hover:cursor-pointer">
             <input
               className="hidden"
@@ -136,7 +138,17 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
             />
             🖼️
           </label>
-          <button onClick={uploadPost}>{postToEdit ? "Update" : "Post"}</button>
+          <button
+            disabled={postContent.length === 0 && postMedia.length === 0}
+            className={`bg-blue-400 px-4 py-[2px] rounded-md ${
+              postContent.length === 0 && postMedia.length === 0
+                ? "hover:cursor-not-allowed"
+                : "hover:cursor-pointer"
+            }`}
+            onClick={uploadPost}
+          >
+            {postToEdit ? "Update" : "Post"}
+          </button>
         </div>
       </div>
     </div>

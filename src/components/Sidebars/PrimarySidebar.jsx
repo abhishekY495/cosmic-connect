@@ -66,12 +66,12 @@ export default function PrimarySidebar() {
           />
         </div>
         <NavLink
-          className="flex gap-2 bg-slate-300 hover:opacity-90 px-5 py-2 rounded-lg max-[800px]:bg-inherit max-[800px]:p-0"
+          className="flex items-center gap-2 bg-slate-300 hover:opacity-90 px-5 py-2 rounded-lg max-[800px]:bg-inherit max-[800px]:p-0"
           to={`/${currentUser?.userName}`}
         >
           <img
             src={currentUser?.avatar}
-            className="w-7 rounded-full"
+            className="w-10 rounded-full max-[800px]:w-7"
             alt="user avatar"
           />
           <div className="max-[800px]:hidden">
