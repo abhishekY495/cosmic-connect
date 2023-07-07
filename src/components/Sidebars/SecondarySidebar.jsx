@@ -5,11 +5,12 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { UsersDataContext } from "../../contexts/UsersDataContext";
 import followIcon from "../../assets/profile/followIcon.svg";
 import verifiedIcon from "../../assets/profile/verified.svg";
+import loadingGif from "../../assets/loadingGif.gif";
 
 export default function SecondarySidebar() {
   const { currentUser } = useContext(AuthContext);
   const {
-    state: { usersData },
+    state: { usersData, usersDataLoading },
     dispatch,
   } = useContext(UsersDataContext);
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,6 +55,15 @@ export default function SecondarySidebar() {
         placeholder="Search Users..."
       />
       <div className="flex flex-col gap-2">
+        {usersDataLoading && (
+          <div>
+            <img
+              src={loadingGif}
+              className="w-10 m-auto pt-8"
+              alt="infinity loader"
+            />
+          </div>
+        )}
         {usersList?.slice(0, 5)?.map((user) => {
           return (
             <div
@@ -64,7 +74,11 @@ export default function SecondarySidebar() {
                 to={`/${user.userName}`}
                 className="flex items-center gap-2"
               >
-                <img src={user.avatar} className="w-9" alt="" />
+                <img
+                  src={user.avatar}
+                  className="w-9 rounded-full"
+                  alt="user avatar"
+                />
                 <div>
                   <div className="flex gap-1">
                     <p className="w-max font-medium">{user.fullName}</p>
@@ -86,7 +100,7 @@ export default function SecondarySidebar() {
             </div>
           );
         })}
-        {usersList.length === 0 && (
+        {!usersDataLoading && usersList?.length === 0 && (
           <div className="flex justify-between items-center">
             No users found.
           </div>
