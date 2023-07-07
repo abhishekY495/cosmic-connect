@@ -53,8 +53,8 @@ function App() {
     localStorage.setItem("currentUser", JSON.stringify(defaultUserData));
 
   useEffect(() => {
-    getPosts();
     getUsers();
+    getPosts();
   }, []);
 
   return (
