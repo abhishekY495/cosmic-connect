@@ -12,15 +12,15 @@ export default function Authentication({ signup, login }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [randomSeed, setRandomSeed] = useState(uuidv4());
   const [bio, setBio] = useState("");
   const [website, setWebsite] = useState("");
+  const [randomSeed, setRandomSeed] = useState(uuidv4());
   const [avatar, setAvatar] = useState(
     `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${randomSeed}`
   );
   const guestCredentials = {
-    email: "johndoe@gmail.com",
-    password: "johndoe77",
+    email: "scottliam61@gmail.com",
+    password: "scottliam61",
   };
 
   const signUpBtnHandler = () => {
