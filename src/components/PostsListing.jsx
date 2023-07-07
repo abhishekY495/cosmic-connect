@@ -16,7 +16,7 @@ export default function PostsListing({
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col relative pb-40 border-[1px] border-b-0">
+    <div className="flex flex-col relative pb-40 border-[1px] border-zinc-200 border-t-0 border-b-0">
       {!usersPost && !showComments && <Filters />}
       <div className="">
         {postsLoading && (

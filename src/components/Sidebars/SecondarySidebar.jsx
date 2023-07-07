@@ -47,7 +47,7 @@ export default function SecondarySidebar() {
   };
 
   return (
-    <div className="w-[300px] border-l-[1px] sticky top-0 h-screen pl-3">
+    <div className="w-[300px] border-l-[1px] border-zinc-300 sticky top-0 h-screen pl-3">
       <input
         type="text"
         onChange={(e) => setSearchTerm(e.target.value)}

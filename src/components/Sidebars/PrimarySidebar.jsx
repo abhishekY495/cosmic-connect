@@ -15,7 +15,7 @@ export default function PrimarySidebar() {
   return (
     <>
       <PostFormModal open={openModal} onClose={() => setOpenModal(false)} />
-      <aside className="w-[220px] border-r-[1px] pr-3 pt-2 sticky top-0 h-screen flex flex-col gap-4 items-end">
+      <aside className="w-[220px] border-r-[1px] border-zinc-300 pr-3 pt-2 sticky top-0 h-screen flex flex-col gap-4 items-end">
         <NavLink className={navLinkStyle} to="/home">
           Home
         </NavLink>

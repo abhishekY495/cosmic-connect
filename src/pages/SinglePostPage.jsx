@@ -18,7 +18,7 @@ export default function SinglePostPage() {
     <>
       <div className="flex justify-center gap-10">
         <PrimarySidebar />
-        <div className="border-[1px]">
+        <div className="border-[1px] border-t-0">
           <SinglePost post={post} showComments />
         </div>
         <SecondarySidebar />
