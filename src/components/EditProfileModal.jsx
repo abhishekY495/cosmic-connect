@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 
+import crossIcon from "../assets/profile/cross-icon.svg";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import { AuthContext } from "../contexts/AuthContext";
-import crossIcon from "../assets/profile/cross-icon.svg";
+import { PostsDataContext } from "../contexts/PostsDataContext";
 
 export default function EditProfileModal({ open, onClose, userProfile }) {
   const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(UsersDataContext);
+  const { dispatch: usersDispatch } = useContext(UsersDataContext);
+  const { dispatch: postsDispatch } = useContext(PostsDataContext);
   const [fullName, setFullName] = useState(
     userProfile && userProfile?.fullName
   );
@@ -45,8 +47,12 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
       avatar,
       website,
     };
-    dispatch({
+    usersDispatch({
       type: "UPDATE_USER_PROFILE",
+      payload: { updatedUserProfile, currentUser },
+    });
+    postsDispatch({
+      type: "UPDATE_USER_DATA",
       payload: { updatedUserProfile, currentUser },
     });
     closeModal();
@@ -63,7 +69,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
       >
         <div
           id="edit-profile-modal"
-          className="bg-white flex flex-col gap-3 w-[320px] m-auto p-5 mt-8 relative"
+          className="bg-white flex flex-col gap-[10px] w-[320px] m-auto p-5 mt-8 relative"
           onClick={(e) => e.stopPropagation()}
         >
           <img
@@ -74,7 +80,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
           />
           <img
             src={avatar}
-            className="w-[50%] h-[160px] object-cover m-auto rounded-full"
+            className="w-[50%] h-[140px] object-cover m-auto rounded-full"
             alt="user profile"
           />
           <label
@@ -105,7 +111,6 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
             Bio
             <textarea
               className="border w-full pl-1"
-              cols="30"
               onChange={(e) => setBio(e.target.value)}
               defaultValue={bio}
               maxLength={40}
@@ -121,8 +126,13 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
             />
           </label>
           <button
-            className="bg-zinc-500 p-1 text-white rounded"
+            className={`bg-zinc-500 p-1 text-white rounded ${
+              fullName.length === 0
+                ? "hover:cursor-not-allowed opacity-70"
+                : "hover:cursor-pointer"
+            }`}
             onClick={updateUserProfile}
+            disabled={fullName.length === 0}
           >
             Update Profile
           </button>

@@ -149,6 +149,47 @@ export const postsDataReducer = (state, action) => {
         postsData: newPostsData,
       };
     }
+    case "UPDATE_USER_DATA": {
+      const { updatedUserProfile, currentUser } = action.payload;
+      const newPostsData = state.postsData.map((post) => {
+        if (post.userName === currentUser.userName) {
+          post = { ...post, ...updatedUserProfile };
+        }
+
+        const commentsData = post.comments.map((user) => {
+          if (user.userName === currentUser.userName) {
+            user = { ...user, ...updatedUserProfile };
+          }
+          return user;
+        });
+
+        const likedData = post.likedBy.map((user) => {
+          if (user.userName === currentUser.userName) {
+            user = { ...user, ...updatedUserProfile };
+          }
+          return user;
+        });
+
+        const bookmarkedByData = post.bookmarkedBy.map((user) => {
+          if (user.userName === currentUser.userName) {
+            user = { ...user, ...updatedUserProfile };
+          }
+          return user;
+        });
+
+        return {
+          ...post,
+          comments: [...commentsData],
+          likedBy: [...likedData],
+          bookmarkedBy: [...bookmarkedByData],
+        };
+      });
+
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
     default: {
       return state;
     }
