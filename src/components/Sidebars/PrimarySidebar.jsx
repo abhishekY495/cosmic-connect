@@ -7,10 +7,12 @@ import homeIcon from "../../assets/navbar/homeIcon.svg";
 import exploreIcon from "../../assets/navbar/exploreIcon.svg";
 import searchIcon from "../../assets/navbar/searchIcon.svg";
 import newPostIcon from "../../assets/navbar/newPostIcon.svg";
+import SearchModal from "../SearchModal";
 
 export default function PrimarySidebar() {
   const { currentUser } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
+  const [searchModal, setSearchModal] = useState(false);
   const navLinkStyle = ({ isActive }) =>
     !isActive
       ? "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1"
@@ -20,13 +22,14 @@ export default function PrimarySidebar() {
     max-[1180px]:justify-end max-[1180px]:w-fit
     max-[800px]:border-none max-[800px]:flex-row max-[800px]:fixed 
     max-[800px]:bg-slate-300 
-    max-[800px]:h-[50px] max-[800px]:top-[93.2%] 
-    max-[800px]:z-10 max-[800px]:items-center max-[800px]:w-[550px]
-    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:justify-around max-[550px]:w-[100%]`;
+    max-[800px]:h-[180px] max-[800px]:top-[93.2%] 
+    max-[800px]:z-10 max-[800px]:items-start max-[800px]:w-[550px]
+    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:pt-[5px] max-[800px]:justify-around max-[550px]:w-[100%]`;
 
   return (
     <>
       <PostFormModal open={openModal} onClose={() => setOpenModal(false)} />
+      <SearchModal open={searchModal} onClose={() => setSearchModal(false)} />
       <aside
         className={`w-[220px] border-r-[1px] border-zinc-300 pr-3 py-3 pb-5 sticky top-0 h-screen flex flex-col gap-4 items-end ${mediaQueries}`}
       >
@@ -46,10 +49,13 @@ export default function PrimarySidebar() {
             alt="explore"
           />
         </NavLink>
-        <div className="px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg hidden max-[1180px]:block max-[800px]:p-0">
+        <div
+          onClick={() => setSearchModal(true)}
+          className="px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg max-[800px]:p-0"
+        >
           <p className="max-[800px]:hidden">Search</p>
           <img
-            className="w-7 hidden max-[800px]:block"
+            className="w-7 mt-1 hidden max-[800px]:block"
             src={searchIcon}
             alt="search"
           />
@@ -60,7 +66,7 @@ export default function PrimarySidebar() {
         >
           <p className="max-[800px]:hidden">New Post</p>
           <img
-            className="w-7 hidden max-[800px]:block"
+            className="w-7 mt-1 hidden max-[800px]:block"
             src={newPostIcon}
             alt="new post"
           />
@@ -71,7 +77,7 @@ export default function PrimarySidebar() {
         >
           <img
             src={currentUser?.avatar}
-            className="w-10 rounded-full max-[800px]:w-7"
+            className="w-10 h-10 object-cover max-[800px]:mt-1 rounded-full max-[800px]:w-7"
             alt="user avatar"
           />
           <div className="max-[800px]:hidden">
