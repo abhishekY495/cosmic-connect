@@ -30,10 +30,10 @@ export default function SocialInteractionBar({ post }) {
     });
   };
 
-  const hasLiked = post?.likedBy.find((user) => {
+  const hasLiked = post?.likedBy?.find((user) => {
     return user.userName === currentUser.userName;
   });
-  const hasBookmarked = post?.bookmarkedBy.find((user) => {
+  const hasBookmarked = post?.bookmarkedBy?.find((user) => {
     return user.userName === currentUser.userName;
   });
 
@@ -43,12 +43,12 @@ export default function SocialInteractionBar({ post }) {
         {hasLiked ? (
           <div className="flex gap-1" onClick={() => unLikePost(post?.id)}>
             <img src={filledHeartIcon} alt="filled heart" className="w-5" />
-            <span className="w-2">{post?.likedBy.length}</span>
+            <span className="w-2">{post?.likedBy?.length}</span>
           </div>
         ) : (
           <div className="flex gap-1" onClick={() => likePost(post?.id)}>
             <img src={emptyHeartIcon} alt="empty heart" className="w-5" />
-            <span className="w-2">{post?.likedBy.length}</span>
+            <span className="w-2">{post?.likedBy?.length}</span>
           </div>
         )}
       </div>
@@ -70,7 +70,7 @@ export default function SocialInteractionBar({ post }) {
       <Link to={`/${post?.userName}/post/${post?.id}`}>
         <div className="flex items-center gap-1 hover:cursor-pointer">
           <img src={commentIcon} alt="comment" className="w-5" />
-          <span>{post?.comments.length}</span>
+          <span>{post?.comments?.length}</span>
         </div>
       </Link>
     </div>

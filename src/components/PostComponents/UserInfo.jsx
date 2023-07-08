@@ -25,7 +25,7 @@ export default function UserInfo({ post, showComments }) {
           <img
             src={post?.avatar}
             alt={post?.fullName}
-            className="w-9 pb-1 mr-[2px] rounded-full"
+            className="w-9 h-9 object-cover mr-[2px] rounded-full"
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-1">

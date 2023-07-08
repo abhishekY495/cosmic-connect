@@ -53,7 +53,7 @@ export default function UserProfile({ userProfile, username }) {
           <div className="flex gap-2">
             <img
               src={userProfile?.avatar}
-              className="w-[120px] object-cover rounded-full"
+              className="w-[120px] h-[120px] object-cover rounded-full"
               alt="user avatar"
             />
             <div className="flex flex-col">

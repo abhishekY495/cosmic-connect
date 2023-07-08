@@ -24,7 +24,7 @@ export default function Comments({ comments }) {
                     <img
                       src={avatar}
                       alt={fullName}
-                      className="w-[30px] mr-[2px] rounded-full"
+                      className="w-[30px] h-[30px] object-cover mr-[2px] rounded-full"
                     />
                     <div className="flex flex-col gap-[2px]">
                       <div className="flex items-center gap-1">

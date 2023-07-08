@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-hot-toast";
 
 import { PostsDataContext } from "../contexts/PostsDataContext";
 import { AuthContext } from "../contexts/AuthContext";
@@ -30,13 +31,13 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
       }
     });
     if (!isAllowed) {
-      alert("File not allowed");
+      toast.error("File not allowed");
       setPostMedia("");
     }
   };
 
   const closeModal = () => {
-    !postToEdit && setPostMedia("") && setPostMedia("");
+    !postToEdit && setPostContent("") && setPostMedia("");
     onClose();
   };
 
@@ -96,8 +97,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
           />
         </div>
         <textarea
-          cols="34"
-          rows="5"
+          className="w-full h-[100px] pl-1"
           defaultValue={postContent}
           onChange={(e) => setPostContent(e.target.value)}
         ></textarea>
@@ -142,7 +142,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
             disabled={postContent.length === 0 && postMedia.length === 0}
             className={`bg-blue-400 px-4 py-[2px] rounded-md ${
               postContent.length === 0 && postMedia.length === 0
-                ? "hover:cursor-not-allowed"
+                ? "hover:cursor-not-allowed opacity-70"
                 : "hover:cursor-pointer"
             }`}
             onClick={uploadPost}
