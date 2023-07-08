@@ -19,8 +19,8 @@ export default function Profile() {
     state: { usersData, usersDataLoading },
   } = useContext(UsersDataContext);
 
-  const userProfile = usersData?.find((user) => user.userName === username);
-  const userPosts = postsData?.filter((post) => post.userName === username);
+  const userProfile = usersData?.find((user) => user?.userName === username);
+  const userPosts = postsData?.filter((post) => post?.userName === username);
 
   useEffect(() => {
     postsDispatch({ type: "FILTER_BY_CREATED_AT" });
