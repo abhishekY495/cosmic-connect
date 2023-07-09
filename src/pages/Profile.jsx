@@ -16,7 +16,7 @@ export default function Profile() {
     dispatch: postsDispatch,
   } = useContext(PostsDataContext);
   const {
-    state: { usersData, usersDataLoading },
+    state: { usersData, usersDataLoading, usersDataError },
   } = useContext(UsersDataContext);
 
   const userProfile = usersData?.find((user) => user?.userName === username);
@@ -39,7 +39,13 @@ export default function Profile() {
             />
           </div>
         )}
-        {!usersDataLoading && !userProfile ? (
+        {usersDataError ? (
+          <div className="pb-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
+            <p className="font-medium text-lg text-center py-10">
+              Something went wrong.
+            </p>
+          </div>
+        ) : !usersDataLoading && !userProfile ? (
           <div className="pb-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
             <p className="font-medium text-lg text-center py-10">
               User profile not found.

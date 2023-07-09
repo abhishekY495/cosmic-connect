@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { AuthContext } from "../../contexts/AuthContext";
-import PostFormModal from "../PostFormModal";
 import homeIcon from "../../assets/navbar/homeIcon.svg";
 import exploreIcon from "../../assets/navbar/exploreIcon.svg";
 import searchIcon from "../../assets/navbar/searchIcon.svg";
 import newPostIcon from "../../assets/navbar/newPostIcon.svg";
+import { AuthContext } from "../../contexts/AuthContext";
+import PostFormModal from "../PostFormModal";
 import SearchModal from "../SearchModal";
 
 export default function PrimarySidebar() {
@@ -77,7 +77,7 @@ export default function PrimarySidebar() {
         >
           <img
             src={currentUser?.avatar}
-            className="w-10 h-10 object-cover max-[800px]:mt-1 rounded-full max-[800px]:w-7"
+            className="w-10 h-10 object-cover max-[800px]:mt-1 rounded-full max-[800px]:w-7 max-[800px]:h-7"
             alt="user avatar"
           />
           <div className="max-[800px]:hidden">

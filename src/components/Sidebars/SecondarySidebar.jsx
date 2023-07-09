@@ -36,7 +36,8 @@ export default function SecondarySidebar() {
 
   return (
     <div className="w-[300px] border-l-[1px] border-zinc-300 sticky top-0 h-screen pl-3 max-[1180px]:hidden">
-      <div className="flex flex-col gap-2 my-4">
+      <p className="my-2 text-lg border-b pb-1">Suggested users</p>
+      <div className="flex flex-col gap-2">
         {usersDataLoading && (
           <div>
             <img

@@ -45,7 +45,7 @@ export default function PostsListing({
             </p>
           )
         ) : (
-          !postsLoading &&
+          !postsLoading && !postsDataError &&
           postsData?.length === 0 && (
             <p className="w-[100%] mx-auto pt-10 text-center">
               You follow nobody...

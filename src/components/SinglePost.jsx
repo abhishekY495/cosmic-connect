@@ -26,7 +26,6 @@ export default function SinglePost({ post, showComments }) {
     </div>
   ) : (
     <div className="flex flex-col items-center border-b-[1px] w-[550px] mx-auto p-7 max-[550px]:w-[100%]">
-      <img src={loadingGif} className="w-10" alt="infinite loader" />
       {postsDataError && (
         <>
           <p>Something went wrong.</p>
