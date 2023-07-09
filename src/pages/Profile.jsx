@@ -58,8 +58,8 @@ export default function Profile() {
             )}
             <PostsListing
               postsData={userPosts}
-              usersPost
               userProfile={userProfile}
+              profilePage
             />
           </>
         )}

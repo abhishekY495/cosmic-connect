@@ -17,11 +17,11 @@ export default function BookmarkedPage() {
   } = useContext(UsersDataContext);
 
   const userProfile = usersData?.find(
-    (user) => user.userName === currentUser.userName
+    (user) => user.userName === currentUser?.userName
   );
 
   const bookmarkedPosts = postsData.filter((post) =>
-    post.bookmarkedBy.find((user) => user.userName === userProfile.userName)
+    post.bookmarkedBy.find((user) => user.userName === userProfile?.userName)
   );
 
   return (
@@ -31,7 +31,7 @@ export default function BookmarkedPage() {
         postsData={bookmarkedPosts}
         postsLoading={postsLoading}
         postsDataError={postsDataError}
-        bookmarked
+        bookmarkPage
       />
       <SecondarySidebar />
     </div>

@@ -38,6 +38,7 @@ export default function HomePage() {
         postsLoading={postsLoading}
         postsDataError={postsDataError}
         filters
+        homePage
       />
       <SecondarySidebar />
     </div>
