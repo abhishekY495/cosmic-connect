@@ -17,23 +17,23 @@ export default function Filters() {
     <div className="flex sticky top-0 z-[1]">
       <button
         onClick={latestBtnHandler}
-        className={`w-full p-2 text-lg text-white ${
+        className={`w-full p-3 text-xl backdrop-blur-3xl max-[800px]:p-2 ${
           filterByCreatedAt
-            ? "bg-black/50 backdrop-blur-3xl underline"
-            : "bg-zinc-500/50 backdrop-blur-3xl"
+            ? "bg-slate-400/60 font-medium"
+            : "bg-slate-200/60 font-light"
         }`}
       >
-        Latest
+        Latest {filterByCreatedAt && "📅"}
       </button>
       <button
         onClick={trendingBtnHandler}
-        className={`w-full p-2 text-lg text-white ${
+        className={`w-full p-3 text-xl backdrop-blur-3xl max-[800px]:p-2 ${
           filterByTrending
-            ? "bg-black/50 backdrop-blur-3xl underline"
-            : "bg-zinc-500/50 backdrop-blur-3xl"
+            ? "bg-slate-400/60 font-medium"
+            : "bg-slate-200/60 font-light"
         }`}
       >
-        Trending
+        Trending {filterByTrending && "🔥"}
       </button>
     </div>
   );

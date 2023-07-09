@@ -17,7 +17,7 @@ export default function SinglePost({ post, showComments }) {
       key={post?.id}
       className={`${
         showComments ? "" : "border-b-[1px]"
-      } w-[550px] mx-auto p-7 max-[550px]:w-[100%]`}
+      } w-[550px] mx-auto p-7 py-5 max-[550px]:w-[100%]`}
     >
       <UserInfo post={post} showComments />
       <PostContent post={post} />

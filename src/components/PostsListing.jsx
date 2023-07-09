@@ -12,12 +12,19 @@ export default function PostsListing({
   usersPost,
   showComments,
   userProfile,
+  filters,
+  bookmarked,
 }) {
   const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="flex flex-col relative pb-40 border-[1px] border-zinc-200 border-t-0 border-b-0 max-[550px]:w-[100%]">
-      {!usersPost && !showComments && <Filters />}
+      {filters && !showComments && <Filters />}
+      {bookmarked && (
+        <p className="sticky top-0 z-[1] w-full py-3 pl-5 border-b bg-green-300/60 backdrop-blur-lg font-medium text-xl max-[800px]:p-2 max-[800px]:pl-3">
+          Bookmarked Posts
+        </p>
+      )}
       <div className="w-[550px] max-[550px]:w-[100%]">
         {postsLoading && (
           <div className="w-[100%] mx-auto pt-10">
@@ -45,7 +52,8 @@ export default function PostsListing({
             </p>
           )
         ) : (
-          !postsLoading && !postsDataError &&
+          !postsLoading &&
+          !postsDataError &&
           postsData?.length === 0 && (
             <p className="w-[100%] mx-auto pt-10 text-center">
               You follow nobody...

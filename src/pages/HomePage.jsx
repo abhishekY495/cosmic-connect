@@ -37,6 +37,7 @@ export default function HomePage() {
         postsData={followingPosts}
         postsLoading={postsLoading}
         postsDataError={postsDataError}
+        filters
       />
       <SecondarySidebar />
     </div>

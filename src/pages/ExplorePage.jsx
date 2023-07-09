@@ -17,6 +17,7 @@ export default function ExplorePage() {
         postsData={postsData}
         postsLoading={postsLoading}
         postsDataError={postsDataError}
+        filters
       />
       <SecondarySidebar />
     </div>
