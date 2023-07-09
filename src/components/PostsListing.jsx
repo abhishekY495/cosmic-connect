@@ -42,28 +42,31 @@ export default function PostsListing({
           </p>
         )}
         {/*  */}
-        {homePage && postsData?.length === 0 && (
+        {!postsLoading && homePage && postsData?.length === 0 && (
           <p className="w-[100%] mx-auto pt-10 text-center">
             You follow nobody...
           </p>
         )}
         {/*  */}
-        {profilePage &&
+        {!postsLoading &&
+        profilePage &&
         userProfile?.userName === currentUser?.userName &&
         postsData?.length === 0 ? (
           <p className="w-[100%] mx-auto pt-10 text-center">
             Post Something...
           </p>
         ) : (
+          !postsLoading &&
           profilePage &&
           postsData?.length === 0 && (
             <p className="w-[100%] mx-auto pt-10 text-center">
-              {userProfile?.fullName} hasn't posted anything.
+              {userProfile &&
+                `${userProfile?.fullName} hasn't posted anything.`}
             </p>
           )
         )}
         {/*  */}
-        {bookmarkPage && postsData.length === 0 && (
+        {!postsLoading && bookmarkPage && postsData.length === 0 && (
           <p className="w-[100%] mx-auto pt-10 text-center">
             Nothing to show...
           </p>
