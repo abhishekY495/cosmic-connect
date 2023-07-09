@@ -190,6 +190,35 @@ export const postsDataReducer = (state, action) => {
         postsData: newPostsData,
       };
     }
+    case "ADD_COMMENT": {
+      const { userComment, postId } = action.payload;
+      const newPostsData = state.postsData.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [...post.comments, userComment] }
+          : post
+      );
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
+    case "DELETE_COMMENT": {
+      const { postId, commentId } = action.payload;
+      const newPostsData = state.postsData.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment.id !== commentId
+              ),
+            }
+          : post
+      );
+      return {
+        ...state,
+        postsData: newPostsData,
+      };
+    }
     default: {
       return state;
     }
