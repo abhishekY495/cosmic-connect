@@ -11,6 +11,7 @@ import SinglePostPage from "./pages/SinglePostPage";
 import { AuthContext } from "./contexts/AuthContext";
 import { PostsDataContext } from "./contexts/PostsDataContext";
 import { UsersDataContext } from "./contexts/UsersDataContext";
+import BookmarkedPage from "./pages/BookmarkedPage";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -94,6 +95,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ExplorePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookmarkedPosts"
+          element={
+            <ProtectedRoute>
+              <BookmarkedPage />
             </ProtectedRoute>
           }
         />

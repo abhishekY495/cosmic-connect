@@ -5,6 +5,7 @@ import homeIcon from "../../assets/navbar/homeIcon.svg";
 import exploreIcon from "../../assets/navbar/exploreIcon.svg";
 import searchIcon from "../../assets/navbar/searchIcon.svg";
 import newPostIcon from "../../assets/navbar/newPostIcon.svg";
+import bookmarkIcon from "../../assets/navbar/bookmarkIcon.svg";
 import { AuthContext } from "../../contexts/AuthContext";
 import PostFormModal from "../PostFormModal";
 import SearchModal from "../SearchModal";
@@ -47,6 +48,14 @@ export default function PrimarySidebar() {
             className="w-7 hidden max-[800px]:block"
             src={exploreIcon}
             alt="explore"
+          />
+        </NavLink>
+        <NavLink className={navLinkStyle} to="/bookmarkedPosts">
+          <p className="max-[800px]:hidden">Bookmarked</p>
+          <img
+            className="w-7 hidden max-[800px]:block"
+            src={bookmarkIcon}
+            alt="bookmark"
           />
         </NavLink>
         <div
