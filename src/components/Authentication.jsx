@@ -14,13 +14,18 @@ export default function Authentication({ signup, login }) {
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [website, setWebsite] = useState("");
-  const [randomSeed, setRandomSeed] = useState(uuidv4());
   const [avatar, setAvatar] = useState(
-    `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${randomSeed}`
+    `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${uuidv4()}`
   );
   const guestCredentials = {
     email: "scottliam61@gmail.com",
     password: "scottliam61",
+  };
+
+  const isValidEmail = (email) => {
+    return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email
+    );
   };
 
   const signUpBtnHandler = () => {
@@ -30,6 +35,8 @@ export default function Authentication({ signup, login }) {
       toast.error("Username cannot be empty");
     } else if (email.length === 0) {
       toast.error("Email cannot be empty");
+    } else if (!isValidEmail(email)) {
+      toast.error("Incorrect email format");
     } else if (password.length <= 6) {
       toast.error("Password should be greater than 6 characters");
     } else {
@@ -74,10 +81,8 @@ export default function Authentication({ signup, login }) {
       }
     );
   };
-
   const generateRandomAvatar = () => {
-    const url = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${randomSeed}`;
-    setRandomSeed(uuidv4());
+    const url = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${uuidv4()}`;
     setAvatar(url);
   };
 
@@ -100,18 +105,22 @@ export default function Authentication({ signup, login }) {
               />
             </div>
             <label>
-              <p>Full Name</p>
+              <p>
+                Full Name <sup className="text-red-500">*</sup>
+              </p>
               <input
-                className="border-zinc-300 w-full rounded-md border-2"
+                className="border-zinc-300 pl-1 w-full rounded-md border-2"
                 value={fullName}
                 type="text"
                 onChange={(e) => setFullName(e.target.value)}
               />
             </label>
             <label>
-              <p>Username</p>
+              <p>
+                Username <sup className="text-red-500">*</sup>
+              </p>
               <input
-                className="border-zinc-300 w-full rounded-md border-2"
+                className="border-zinc-300 pl-1 w-full rounded-md border-2"
                 value={userName}
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
@@ -120,7 +129,7 @@ export default function Authentication({ signup, login }) {
             <label>
               <p>Bio</p>
               <textarea
-                className="border-zinc-300 w-full rounded-md border-2"
+                className="border-zinc-300 pl-1 w-full rounded-md border-2"
                 value={bio}
                 type="text"
                 maxLength={40}
@@ -130,7 +139,7 @@ export default function Authentication({ signup, login }) {
             <label>
               <p>Website</p>
               <input
-                className="border-zinc-300 w-full rounded-md border-2"
+                className="border-zinc-300 pl-1 w-full rounded-md border-2"
                 value={website}
                 type="text"
                 onChange={(e) => setWebsite(e.target.value)}
@@ -139,18 +148,22 @@ export default function Authentication({ signup, login }) {
           </>
         )}
         <label>
-          <p>Email</p>
+          <p>
+            Email <sup className="text-red-500">*</sup>
+          </p>
           <input
-            className="border-zinc-300 w-full rounded-md border-2"
+            className="border-zinc-300 pl-1 w-full rounded-md border-2"
             value={email}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
         <label>
-          <p>Password</p>
+          <p>
+            Password <sup className="text-red-500">*</sup>
+          </p>
           <input
-            className="border-zinc-300 w-full rounded-md border-2"
+            className="border-zinc-300 pl-1 w-full rounded-md border-2"
             value={password}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
