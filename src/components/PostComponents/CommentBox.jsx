@@ -15,6 +15,7 @@ export default function CommentBox() {
     const userComment = {
       id: uuidv4(),
       content: commentContent,
+      commentedAt: new Date(),
       ...currentUser,
     };
     dispatch({

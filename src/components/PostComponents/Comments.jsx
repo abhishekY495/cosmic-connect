@@ -16,6 +16,15 @@ export default function Comments({ comments }) {
     dispatch({ type: "DELETE_COMMENT", payload: { postId, commentId } });
   };
 
+  const formatDate = (userDate) => {
+    const date = new Date(userDate);
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      date
+    );
+    const day = date.getDate();
+    return month + " " + day;
+  };
+
   return (
     <>
       <br />
@@ -29,22 +38,34 @@ export default function Comments({ comments }) {
         {comments?.length === 0 ? (
           <p className="text-center">No Comments</p>
         ) : (
-          comments?.map((user) => {
-            const { id, userName, avatar, fullName, verified, content } = user;
-            return (
-              <div key={id} className="flex flex-col gap-1 border-b-[1px] pb-5">
-                <div className="flex justify-between">
-                  <Link to={`/${userName}`}>
-                    <div className="flex items-center gap-1">
-                      <img
-                        src={avatar}
-                        alt={fullName}
-                        className="w-[30px] h-[30px] object-cover mr-[2px] rounded-full"
-                      />
-                      <div className="flex flex-col gap-[2px]">
-                        <div className="flex items-center gap-1">
-                          <p className="font-medium text-sm">{fullName}</p>
-                          <div className="flex gap-1 items-center">
+          comments
+            ?.sort((a, b) => new Date(b.commentedAt) - new Date(a.commentedAt))
+            ?.map((user) => {
+              const {
+                id,
+                userName,
+                avatar,
+                fullName,
+                verified,
+                content,
+                commentedAt,
+              } = user;
+              return (
+                <div
+                  key={id}
+                  className="flex flex-col gap-1 border-b-[1px] pb-5"
+                >
+                  <div className="flex justify-between">
+                    <Link to={`/${userName}`}>
+                      <div className="flex items-center gap-1">
+                        <img
+                          src={avatar}
+                          alt={fullName}
+                          className="w-[30px] h-[30px] object-cover mr-[2px] rounded-full"
+                        />
+                        <div className="flex flex-col gap-[2px]">
+                          <div className="flex items-center gap-1">
+                            <p className="font-medium text-sm">{fullName}</p>
                             {verified && (
                               <img
                                 src={verifiedIcon}
@@ -52,25 +73,30 @@ export default function Comments({ comments }) {
                                 alt="verified"
                               />
                             )}
+                            <span>•</span>
+                            <p className="font-light text-sm">
+                              {formatDate(commentedAt)}
+                            </p>
                           </div>
+                          <p className="font-light text-xs -mt-1">
+                            @{userName}
+                          </p>
                         </div>
-                        <p className="font-light text-xs -mt-1">@{userName}</p>
                       </div>
-                    </div>
-                  </Link>
-                  {userName === currentUser.userName && (
-                    <img
-                      src={deleteIcon}
-                      onClick={() => deleteCommentHandler(id)}
-                      className="w-5 hover:cursor-pointer"
-                      alt="trash"
-                    />
-                  )}
+                    </Link>
+                    {userName === currentUser.userName && (
+                      <img
+                        src={deleteIcon}
+                        onClick={() => deleteCommentHandler(id)}
+                        className="w-5 hover:cursor-pointer"
+                        alt="trash"
+                      />
+                    )}
+                  </div>
+                  <div className="whitespace-pre-wrap">{content}</div>
                 </div>
-                <div className="whitespace-pre-wrap">{content}</div>
-              </div>
-            );
-          })
+              );
+            })
         )}
       </div>
     </>
