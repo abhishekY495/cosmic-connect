@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import verifiedIcon from "../../assets/profile/verified.svg";
 import deleteIcon from "../../assets/posts/delete-icon.svg";
@@ -14,6 +15,7 @@ export default function Comments({ comments }) {
 
   const deleteCommentHandler = (commentId) => {
     dispatch({ type: "DELETE_COMMENT", payload: { postId, commentId } });
+    toast.success("Comment deleted");
   };
 
   const formatDate = (userDate) => {

@@ -132,7 +132,7 @@ export default function Authentication({ signup, login }) {
                 className="border-zinc-300 pl-1 w-full rounded-md border-2"
                 value={bio}
                 type="text"
-                maxLength={40}
+                maxLength={35}
                 onChange={(e) => setBio(e.target.value)}
               />
             </label>

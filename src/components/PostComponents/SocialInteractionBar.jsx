@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import emptyHeartIcon from "../../assets/posts/empty-heart-icon.svg";
 import emptyBookmarkIcon from "../../assets/posts/empty-bookmark-icon.svg";
@@ -15,19 +16,23 @@ export default function SocialInteractionBar({ post }) {
 
   const likePost = (postId) => {
     dispatch({ type: "LIKE_POST", payload: { postId, currentUser } });
+    toast.success("Liked");
   };
   const unLikePost = (postId) => {
     dispatch({ type: "UN_LIKE_POST", payload: { postId, currentUser } });
+    toast.success("UnLiked");
   };
 
   const addToBookmark = (postId) => {
     dispatch({ type: "ADD_TO_BOOKMARK", payload: { postId, currentUser } });
+    toast.success("Sent to Bookmarked");
   };
   const removeFromBookmark = (postId) => {
     dispatch({
       type: "REMOVE_FROM_BOOKMARK",
       payload: { postId, currentUser },
     });
+    toast.success("Removed from Bookmarked");
   };
 
   const hasLiked = post?.likedBy?.find((user) => {

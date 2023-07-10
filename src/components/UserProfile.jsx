@@ -36,9 +36,11 @@ export default function UserProfile({ userProfile, username }) {
 
   const followUser = () => {
     dispatch({ type: "FOLLOW", payload: { username, currentUser } });
+    toast.success(`Followed @${username}`)
   };
   const unFollowUser = () => {
     dispatch({ type: "UN_FOLLOW", payload: { username, currentUser } });
+    toast.success(`UnFollowed @${username}`)
   };
 
   return (

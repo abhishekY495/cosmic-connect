@@ -19,6 +19,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
   );
   const [selectedFile, setSelectedFile] = useState(null);
   const allowedFileExt = ["png", "gif", "jpeg", "jpg", "mp4"];
+  const [disable, setDisable] = useState(false);
 
   const handleMedia = (e) => {
     const file = e.target.files[0];
@@ -41,38 +42,60 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
     onClose();
   };
 
-  const uploadPost = () => {
-    if (postToEdit) {
-      const updatedPost = {
-        ...postToEdit,
-        content: postContent,
-        media: postMedia,
-        isVideo:
-          selectedFile && selectedFile.type.includes("mp4") ? true : false,
-        edited: true,
-      };
-      dispatch({ type: "UPDATE_POST", payload: { postToEdit, updatedPost } });
-      closeModal();
-    } else {
-      const newPost = {
-        id: uuidv4(),
-        userName,
-        fullName,
-        avatar,
-        verified,
-        content: postContent,
-        media: postMedia,
-        isVideo:
-          selectedFile && selectedFile.type.includes("mp4") ? true : false,
-        createdAt: new Date(),
-        updatedAt: "",
-        likedBy: [],
-        bookmarkedBy: [],
-        comments: [],
-      };
-      dispatch({ type: "CREATE_POST", payload: newPost });
-      closeModal();
-    }
+  const postHandler = () => {
+    setDisable(true);
+    toast.promise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          if (postToEdit) {
+            const updatedPost = {
+              ...postToEdit,
+              content: postContent,
+              media: postMedia,
+              isVideo:
+                selectedFile && selectedFile.type.includes("mp4")
+                  ? true
+                  : false,
+              edited: true,
+            };
+            dispatch({
+              type: "UPDATE_POST",
+              payload: { postToEdit, updatedPost },
+            });
+            closeModal();
+            setDisable(false);
+            resolve();
+          } else {
+            const newPost = {
+              id: uuidv4(),
+              userName,
+              fullName,
+              avatar,
+              verified,
+              content: postContent,
+              media: postMedia,
+              isVideo:
+                selectedFile && selectedFile.type.includes("mp4")
+                  ? true
+                  : false,
+              createdAt: new Date(),
+              updatedAt: "",
+              likedBy: [],
+              bookmarkedBy: [],
+              comments: [],
+            };
+            dispatch({ type: "CREATE_POST", payload: newPost });
+            setDisable(false);
+            closeModal();
+            resolve();
+          }
+        }, 1500);
+      }),
+      {
+        loading: `${postToEdit ? "Updating" : "Posting"}`,
+        success: `${postToEdit ? "Post Updated" : "Posted"}`,
+      }
+    );
   };
 
   if (!open) return null;
@@ -84,7 +107,7 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
     >
       <div
         id="modal-container"
-        className="w-[320px] m-auto mt-16 p-4 bg-slate-100 rounded-md"
+        className="w-[320px] m-auto mt-16 p-4 pb-2 bg-slate-100 rounded-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between">
@@ -97,9 +120,10 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
           />
         </div>
         <textarea
-          className="w-full h-[100px] pl-1"
+          className="w-full h-[100px] p-1 pl-2 focus:outline-zinc-300 focus:outline-1 focus:border-none resize-none"
           defaultValue={postContent}
           onChange={(e) => setPostContent(e.target.value)}
+          disabled={disable}
         ></textarea>
         <div className="flex justify-center">
           {postMedia && (
@@ -135,17 +159,20 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
               id="file"
               accept="image/png, image/gif, image/jpeg, image/jpg, video/mp4"
               onChange={handleMedia}
+              disabled={disable}
             />
             🖼️
           </label>
           <button
-            disabled={postContent.length === 0 && postMedia.length === 0}
+            disabled={
+              (postContent.length === 0 && postMedia.length === 0) || disable
+            }
             className={`bg-blue-400 px-4 py-[2px] rounded-md ${
-              postContent.length === 0 && postMedia.length === 0
+              (postContent.length === 0 && postMedia.length === 0) || disable
                 ? "hover:cursor-not-allowed opacity-70"
                 : "hover:cursor-pointer"
             }`}
-            onClick={uploadPost}
+            onClick={postHandler}
           >
             {postToEdit ? "Update" : "Post"}
           </button>

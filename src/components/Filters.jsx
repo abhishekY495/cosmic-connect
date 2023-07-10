@@ -14,7 +14,7 @@ export default function Filters() {
   };
 
   return (
-    <div className="flex sticky top-0 z-[1]">
+    <div className="flex sticky top-0 z-[1] border-b">
       <button
         onClick={latestBtnHandler}
         className={`w-full p-3 text-xl backdrop-blur-3xl max-[800px]:p-2 ${

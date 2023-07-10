@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { UsersDataContext } from "../../contexts/UsersDataContext";
@@ -32,6 +33,7 @@ export default function SecondarySidebar() {
 
   const followUser = (username) => {
     dispatch({ type: "FOLLOW", payload: { username, currentUser } });
+    toast.success(`Followed @${username}`);
   };
 
   return (

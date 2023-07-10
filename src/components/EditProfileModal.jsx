@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 
 import crossIcon from "../assets/profile/cross-icon.svg";
 import { UsersDataContext } from "../contexts/UsersDataContext";
@@ -15,6 +16,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
   const [avatar, setAvatar] = useState(userProfile && userProfile?.avatar);
   const [bio, setBio] = useState(userProfile && userProfile?.bio);
   const [website, setWebsite] = useState(userProfile && userProfile?.website);
+  const [disable, setDisable] = useState(false);
   const allowedFileExt = ["png", "jpeg", "jpg"];
 
   const closeModal = () => {
@@ -40,22 +42,32 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
   };
 
   const updateUserProfile = () => {
-    const updatedUserProfile = {
-      ...currentUser,
-      fullName,
-      bio,
-      avatar,
-      website,
-    };
-    usersDispatch({
-      type: "UPDATE_USER_PROFILE",
-      payload: { updatedUserProfile, currentUser },
-    });
-    postsDispatch({
-      type: "UPDATE_USER_DATA",
-      payload: { updatedUserProfile, currentUser },
-    });
-    closeModal();
+    setDisable(true);
+    toast.promise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          const updatedUserProfile = {
+            ...currentUser,
+            fullName,
+            bio,
+            avatar,
+            website,
+          };
+          usersDispatch({
+            type: "UPDATE_USER_PROFILE",
+            payload: { updatedUserProfile, currentUser },
+          });
+          postsDispatch({
+            type: "UPDATE_USER_DATA",
+            payload: { updatedUserProfile, currentUser },
+          });
+          setDisable(false);
+          closeModal();
+          resolve();
+        }, 1500);
+      }),
+      { loading: "Updating", success: "Profile Updated" }
+    );
   };
 
   if (!open) {
@@ -96,6 +108,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
               onChange={handleMedia}
               className="hidden"
               accept="image/png, image/jpeg, image/jpg"
+              disabled={disable}
             />
           </label>
           <label>
@@ -105,15 +118,17 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
               type="text"
               onChange={(e) => setFullName(e.target.value)}
               defaultValue={fullName}
+              disabled={disable}
             />
           </label>
           <label>
             Bio
             <textarea
-              className="border w-full pl-1"
+              className="border w-full pl-1 resize-none"
               onChange={(e) => setBio(e.target.value)}
               defaultValue={bio}
-              maxLength={40}
+              maxLength={35}
+              disabled={disable}
             ></textarea>
           </label>
           <label>
@@ -123,16 +138,17 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
               type="text"
               onChange={(e) => setWebsite(e.target.value)}
               defaultValue={website}
+              disabled={disable}
             />
           </label>
           <button
             className={`bg-zinc-500 p-1 text-white rounded ${
-              fullName.length === 0
+              fullName.length === 0 || disable
                 ? "hover:cursor-not-allowed opacity-70"
                 : "hover:cursor-pointer"
             }`}
             onClick={updateUserProfile}
-            disabled={fullName.length === 0}
+            disabled={fullName.length === 0 || disable}
           >
             Update Profile
           </button>
