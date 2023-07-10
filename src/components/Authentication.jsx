@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
-import { AuthContext } from "../contexts/AuthContext";
 import randomIcon from "../assets/randomIcon.svg";
+import { AuthContext } from "../contexts/AuthContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Authentication({ signup, login }) {
   const { signUpUser, loginUser } = useContext(AuthContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,7 +92,7 @@ export default function Authentication({ signup, login }) {
 
   return (
     <>
-      <div className="flex flex-col w-[320px] bg-slate-200 m-auto p-5 gap-2 mt-5 rounded">
+      <div className={`${darkMode && "text-black"} flex flex-col w-[320px] bg-slate-200 m-auto p-5 gap-2 pt-5 rounded`}>
         {signup && (
           <>
             <div className="relative">

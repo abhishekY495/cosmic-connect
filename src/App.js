@@ -63,7 +63,7 @@ function App() {
   }, []);
 
   return (
-    <div className={darkMode ? "bg-zinc-900 text-white" : "bg-white text-black"}>
+    <div className={`${darkMode ? "bg-zinc-900 text-white" : "bg-white text-black"} h-screen`}>
       <Toaster position="top-center" />
       <Routes>
         <Route
