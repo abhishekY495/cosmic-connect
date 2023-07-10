@@ -91,8 +91,12 @@ export default function Authentication({ signup, login }) {
   };
 
   return (
-    <>
-      <div className={`${darkMode && "text-black"} flex flex-col w-[320px] bg-slate-200 m-auto p-5 gap-2 pt-5 rounded`}>
+    <div className={`${darkMode ? "bg-zinc-900" : "bg-white"} h-screen pt-5`}>
+      <div
+        className={`${
+          darkMode && "text-black"
+        } flex flex-col w-[320px] bg-slate-200 m-auto p-5 gap-2 pt-5 rounded`}
+      >
         {signup && (
           <>
             <div className="relative">
@@ -214,6 +218,6 @@ export default function Authentication({ signup, login }) {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
