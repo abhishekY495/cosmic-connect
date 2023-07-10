@@ -12,6 +12,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import EditProfileModal from "./EditProfileModal";
 import { ThemeContext } from "../contexts/ThemeContext";
+import FollowersModal from "./FollowersModal";
+import FollowingModal from "./FollowingModal";
 
 export default function UserProfile({ userProfile, username }) {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function UserProfile({ userProfile, username }) {
     toggleTheme,
   } = useContext(ThemeContext);
   const [openModal, setOpenModal] = useState(false);
+  const [openFollowersModal, setFollowersModal] = useState(false);
+  const [openFollowingModal, setFollowingModal] = useState(false);
 
   const currentUserProfile = usersData?.find((user) => {
     return user?.userName === currentUser?.userName;
@@ -57,11 +61,20 @@ export default function UserProfile({ userProfile, username }) {
         open={openModal}
         onClose={() => setOpenModal(false)}
       />
+      <FollowersModal
+        open={openFollowersModal}
+        onClose={() => setFollowersModal(false)}
+      />
+      <FollowingModal
+        open={openFollowingModal}
+        onClose={() => setFollowingModal(false)}
+      />
       <div
         className={`${
           darkMode && "text-black"
         } p-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]`}
       >
+        {/*  */}
         <div className="flex justify-between items-start">
           <div className="flex gap-2">
             <img
@@ -138,14 +151,22 @@ export default function UserProfile({ userProfile, username }) {
             </a>
           </div>
         )}
+        {/*  */}
         <div className="flex gap-4">
-          <p>
+          <p
+            className="hover:cursor-pointer"
+            onClick={() => setFollowersModal(true)}
+          >
             <b className="mr-[1px]">{userProfile?.followers.length}</b>Followers
           </p>
-          <p>
+          <p
+            className="hover:cursor-pointer"
+            onClick={() => setFollowingModal(true)}
+          >
             <b className="mr-[1px]">{userProfile?.following.length}</b>Following
           </p>
         </div>
+        {/*  */}
       </div>
     </>
   );
