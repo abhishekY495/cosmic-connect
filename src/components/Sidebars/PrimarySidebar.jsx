@@ -7,11 +7,15 @@ import searchIcon from "../../assets/navbar/searchIcon.svg";
 import newPostIcon from "../../assets/navbar/newPostIcon.svg";
 import bookmarkIcon from "../../assets/navbar/bookmarkIcon.svg";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import PostFormModal from "../PostFormModal";
 import SearchModal from "../SearchModal";
 
 export default function PrimarySidebar() {
   const { currentUser } = useContext(AuthContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [openModal, setOpenModal] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
   const navLinkStyle = ({ isActive }) =>
@@ -25,7 +29,7 @@ export default function PrimarySidebar() {
     max-[800px]:bg-slate-300 
     max-[800px]:h-[180px] max-[800px]:top-[94%] 
     max-[800px]:z-10 max-[800px]:items-start max-[800px]:w-[550px]
-    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:pt-[5px] max-[800px]:justify-around max-[550px]:w-[100%]`;
+    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:pt-[5px] max-[800px]:justify-around max-[800px]:w-[100%]`;
 
   return (
     <>
@@ -60,7 +64,9 @@ export default function PrimarySidebar() {
         </NavLink>
         <div
           onClick={() => setSearchModal(true)}
-          className="px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg max-[800px]:p-0"
+          className={`${
+            darkMode && "hover:text-black"
+          } px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg max-[800px]:p-0`}
         >
           <p className="max-[800px]:hidden">Search</p>
           <img
@@ -70,7 +76,9 @@ export default function PrimarySidebar() {
           />
         </div>
         <div
-          className="hover:cursor-pointer bg-blue-200 hover:bg-blue-300 w-[115px] max-[800px]:w-fit max-[800px]:bg-slate-300 px-5 max-[800px]:p-0 py-1 font-medium rounded-lg"
+          className={`${
+            darkMode && "text-black"
+          } hover:cursor-pointer bg-blue-200 hover:bg-blue-300 w-[115px] max-[800px]:w-fit max-[800px]:bg-slate-300 px-5 max-[800px]:p-0 py-1 font-medium rounded-lg`}
           onClick={() => setOpenModal(true)}
         >
           <p className="max-[800px]:hidden">New Post</p>
@@ -81,7 +89,9 @@ export default function PrimarySidebar() {
           />
         </div>
         <NavLink
-          className="flex items-center gap-2 bg-slate-300 hover:opacity-90 px-5 py-2 rounded-lg max-[800px]:bg-inherit max-[800px]:p-0"
+          className={`${
+            darkMode && "text-black"
+          } flex items-center gap-2 bg-slate-300 hover:opacity-90 px-5 py-2 rounded-lg max-[800px]:bg-inherit max-[800px]:p-0`}
           to={`/${currentUser?.userName}`}
         >
           <img

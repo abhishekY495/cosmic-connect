@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import Profile from "./pages/Profile";
 import SinglePostPage from "./pages/SinglePostPage";
+import { ThemeContext } from "./contexts/ThemeContext";
 import { AuthContext } from "./contexts/AuthContext";
 import { PostsDataContext } from "./contexts/PostsDataContext";
 import { UsersDataContext } from "./contexts/UsersDataContext";
@@ -20,6 +21,9 @@ function App() {
     state: { usersData },
     dispatch: usersDispatch,
   } = useContext(UsersDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const POSTS_API_URL =
     "https://cosmic-connect-api.abhisheky495.repl.co/postsdata";
   const USERS_API_URL =
@@ -59,7 +63,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className={darkMode ? "bg-zinc-900 text-white" : "bg-white text-black"}>
       <Toaster position="top-center" />
       <Routes>
         <Route

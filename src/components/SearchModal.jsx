@@ -6,6 +6,8 @@ import followIcon from "../assets/profile/followIcon.svg";
 import followedIcon from "../assets/profile/followedIcon.svg";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import { AuthContext } from "../contexts/AuthContext";
+import { toast } from "react-hot-toast";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function SearchModal({ open, onClose }) {
   const { currentUser } = useContext(AuthContext);
@@ -13,6 +15,9 @@ export default function SearchModal({ open, onClose }) {
     state: { usersData },
     dispatch,
   } = useContext(UsersDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [searchTerm, setSearchTerm] = useState();
 
   const closeModal = () => {
@@ -40,9 +45,11 @@ export default function SearchModal({ open, onClose }) {
 
   const followUser = (username) => {
     dispatch({ type: "FOLLOW", payload: { username, currentUser } });
+    toast.success(`Followed ${username}`);
   };
   const unFollowUser = (username) => {
     dispatch({ type: "UN_FOLLOW", payload: { username, currentUser } });
+    toast.success(`UnFollowed ${username}`);
   };
 
   const searchHandler = (e) => {
@@ -61,7 +68,9 @@ export default function SearchModal({ open, onClose }) {
       onClick={closeModal}
     >
       <div
-        className="w-[320px] m-auto bg-white p-5 mt-8 rounded-lg"
+        className={`${
+          darkMode && "text-black bg-gray-100"
+        } w-[320px] m-auto bg-white p-5 mt-8 rounded-lg`}
         onClick={(e) => e.stopPropagation()}
       >
         <input

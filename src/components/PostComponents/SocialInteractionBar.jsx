@@ -7,12 +7,17 @@ import emptyBookmarkIcon from "../../assets/posts/empty-bookmark-icon.svg";
 import filledHeartIcon from "../../assets/posts/filled-heart-icon.svg";
 import filledBookmarkIcon from "../../assets/posts/filled-bookmark-icon.svg";
 import commentIcon from "../../assets/posts/comment-icon.svg";
+import darkModeCommentIcon from "../../assets/posts/dark-comment-icon.svg";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostsDataContext } from "../../contexts/PostsDataContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export default function SocialInteractionBar({ post }) {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(PostsDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
 
   const likePost = (postId) => {
     dispatch({ type: "LIKE_POST", payload: { postId, currentUser } });
@@ -74,7 +79,11 @@ export default function SocialInteractionBar({ post }) {
       )}
       <Link to={`/${post?.userName}/post/${post?.id}`}>
         <div className="flex items-center gap-1 hover:cursor-pointer">
-          <img src={commentIcon} alt="comment" className="w-5" />
+          <img
+            src={darkMode ? darkModeCommentIcon : commentIcon}
+            alt="comment"
+            className="w-5"
+          />
           <span>{post?.comments?.length}</span>
         </div>
       </Link>

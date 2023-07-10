@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { UsersDataContext } from "../../contexts/UsersDataContext";
 import followIcon from "../../assets/profile/followIcon.svg";
 import verifiedIcon from "../../assets/profile/verified.svg";
 import loadingGif from "../../assets/loadingGif.gif";
+import { AuthContext } from "../../contexts/AuthContext";
+import { UsersDataContext } from "../../contexts/UsersDataContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export default function SecondarySidebar() {
   const { currentUser } = useContext(AuthContext);
@@ -14,6 +15,9 @@ export default function SecondarySidebar() {
     state: { usersData, usersDataLoading },
     dispatch,
   } = useContext(UsersDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
 
   const currentUserProfile = usersData?.find(
     (user) => user.userName === currentUser.userName
@@ -71,7 +75,11 @@ export default function SecondarySidebar() {
                       <img src={verifiedIcon} className="w-4" alt="" />
                     )}
                   </div>
-                  <p className="font-light text-sm text-gray-500 -mt-1">
+                  <p
+                    className={`${
+                      darkMode && "text-gray-400"
+                    } font-light text-sm text-gray-500 -mt-1`}
+                  >
                     @{user.userName}
                   </p>
                 </div>

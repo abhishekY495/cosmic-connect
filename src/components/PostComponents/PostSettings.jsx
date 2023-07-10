@@ -3,13 +3,18 @@ import React, { useContext, useState } from "react";
 import optionsIcon from "../../assets/posts/options-icon.svg";
 import deleteIcon from "../../assets/posts/delete-icon.svg";
 import editIcon from "../../assets/posts/edit-icon.svg";
+import darkOptionsIcon from "../../assets/posts/dark-options-icon.svg";
 import { PostsDataContext } from "../../contexts/PostsDataContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import PostFormModal from "../PostFormModal";
 
 export default function PostSettings({ post }) {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(PostsDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [hideOptions, setHideOptions] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
@@ -37,7 +42,7 @@ export default function PostSettings({ post }) {
       {currentUser.userName === post?.userName && (
         <div className="flex gap-3 relative">
           <img
-            src={optionsIcon}
+            src={darkMode ? darkOptionsIcon : optionsIcon}
             className="w-5 hover:cursor-pointer"
             onClick={toggleOptions}
             alt="options"
@@ -52,14 +57,18 @@ export default function PostSettings({ post }) {
             <>
               <span
                 onClick={() => deletePost(post?.id)}
-                className="flex gap-2 hover:cursor-pointer"
+                className={`${
+                  darkMode && "text-black font-medium"
+                } flex gap-2 hover:cursor-pointer`}
               >
                 <img src={deleteIcon} className="w-5" alt="delete" />
                 Delete
               </span>
               <span
                 onClick={() => editPost(post?.id)}
-                className="flex gap-2 hover:cursor-pointer"
+                className={`${
+                  darkMode && "text-black font-medium"
+                } flex gap-2 hover:cursor-pointer`}
               >
                 <img src={editIcon} className="w-5" alt="delete" />
                 Edit

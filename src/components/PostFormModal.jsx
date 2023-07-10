@@ -5,12 +5,16 @@ import { toast } from "react-hot-toast";
 import { PostsDataContext } from "../contexts/PostsDataContext";
 import { AuthContext } from "../contexts/AuthContext";
 import crossIcon from "../assets/posts/cross-icon.svg";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function PostFormModal({ open, onClose, postToEdit }) {
   const { dispatch } = useContext(PostsDataContext);
   const {
     currentUser: { userName, fullName, avatar, verified },
   } = useContext(AuthContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [postContent, setPostContent] = useState(
     postToEdit ? postToEdit?.content : ""
   );
@@ -107,11 +111,11 @@ export default function PostFormModal({ open, onClose, postToEdit }) {
     >
       <div
         id="modal-container"
-        className="w-[320px] m-auto mt-16 p-4 pb-2 bg-slate-100 rounded-md"
+        className={`${darkMode && "text-black bg-gray-100"} w-[320px] m-auto mt-16 p-4 pb-2 bg-slate-100 rounded-md`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between">
-          <p>{postToEdit ? "Edit Post" : "New Post"}</p>
+          <p className="font-medium">{postToEdit ? "Edit Post" : "New Post"}</p>
           <img
             src={crossIcon}
             onClick={closeModal}

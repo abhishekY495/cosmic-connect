@@ -6,9 +6,12 @@ import verifiedIcon from "../assets/profile/verified.svg";
 import logoutIcon from "../assets/profile/logoutIcon.svg";
 import linkIcon from "../assets/profile/linkIcon.svg";
 import bioIcon from "../assets/profile/bioIcon.svg";
+import moonIcon from "../assets/theme/moonIcon.svg";
+import sunIcon from "../assets/theme/sunIcon.svg";
 import { AuthContext } from "../contexts/AuthContext";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import EditProfileModal from "./EditProfileModal";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function UserProfile({ userProfile, username }) {
   const navigate = useNavigate();
@@ -17,6 +20,10 @@ export default function UserProfile({ userProfile, username }) {
     state: { usersData },
     dispatch,
   } = useContext(UsersDataContext);
+  const {
+    theme: { darkMode },
+    toggleTheme,
+  } = useContext(ThemeContext);
   const [openModal, setOpenModal] = useState(false);
 
   const currentUserProfile = usersData?.find((user) => {
@@ -36,11 +43,11 @@ export default function UserProfile({ userProfile, username }) {
 
   const followUser = () => {
     dispatch({ type: "FOLLOW", payload: { username, currentUser } });
-    toast.success(`Followed @${username}`)
+    toast.success(`Followed @${username}`);
   };
   const unFollowUser = () => {
     dispatch({ type: "UN_FOLLOW", payload: { username, currentUser } });
-    toast.success(`UnFollowed @${username}`)
+    toast.success(`UnFollowed @${username}`);
   };
 
   return (
@@ -50,8 +57,12 @@ export default function UserProfile({ userProfile, username }) {
         open={openModal}
         onClose={() => setOpenModal(false)}
       />
-      <div className="p-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
-        <div className="flex justify-between">
+      <div
+        className={`${
+          darkMode && "text-black"
+        } p-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]`}
+      >
+        <div className="flex justify-between items-start">
           <div className="flex gap-2">
             <img
               src={userProfile?.avatar}
@@ -91,17 +102,25 @@ export default function UserProfile({ userProfile, username }) {
             </div>
           </div>
           {currentUser?.userName === userProfile?.userName && (
-            <img
-              className="w-7 h-fit bg-red-400 p-1 rounded-md hover:cursor-pointer"
-              onClick={logoutBtnHandler}
-              src={logoutIcon}
-              alt="logout"
-            />
+            <div className="flex gap-2">
+              <img
+                src={darkMode ? sunIcon : moonIcon}
+                onClick={toggleTheme}
+                className="w-7 hover:cursor-pointer"
+                alt={darkMode ? "sun" : "moon"}
+              />
+              <img
+                className="w-7 h-fit bg-red-400 p-1 rounded-md hover:cursor-pointer"
+                onClick={logoutBtnHandler}
+                src={logoutIcon}
+                alt="logout"
+              />
+            </div>
           )}
         </div>
         {/*  */}
         {userProfile?.bio && (
-          <div className="w-[540px] max-[550px]:w-[100%] flex gap-1 my-[2px]">
+          <div className="w-[540px] max-[800px]:w-[100%] flex gap-1 my-[2px]">
             <img src={bioIcon} className="w-[15px]" alt="website" />
             <p>{userProfile?.bio}</p>
           </div>

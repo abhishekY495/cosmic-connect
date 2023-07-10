@@ -5,11 +5,15 @@ import crossIcon from "../assets/profile/cross-icon.svg";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { PostsDataContext } from "../contexts/PostsDataContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function EditProfileModal({ open, onClose, userProfile }) {
   const { currentUser } = useContext(AuthContext);
   const { dispatch: usersDispatch } = useContext(UsersDataContext);
   const { dispatch: postsDispatch } = useContext(PostsDataContext);
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const [fullName, setFullName] = useState(
     userProfile && userProfile?.fullName
   );
@@ -81,12 +85,14 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
       >
         <div
           id="edit-profile-modal"
-          className="bg-white flex flex-col gap-[10px] w-[320px] m-auto p-5 mt-8 relative"
+          className={`${
+            darkMode ? "text-black bg-gray-200" : "bg-white"
+          } flex flex-col gap-[10px] w-[320px] m-auto p-5 mt-8 relative rounded-md`}
           onClick={(e) => e.stopPropagation()}
         >
           <img
             src={crossIcon}
-            className="w-6 bg-slate-200 p-1 absolute right-3 top-3 rounded-full hover:cursor-pointer"
+            className="w-6 bg-slate-300 p-1 absolute right-3 top-3 rounded-full hover:cursor-pointer"
             alt="cross"
             onClick={closeModal}
           />

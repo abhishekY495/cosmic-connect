@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 
+import { ThemeContextProvider } from "./contexts/ThemeContext";
 import { UsersDataContextProvider } from "./contexts/UsersDataContext";
-import { PostsDataContextProvider } from "./contexts/PostsDataContext";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import { PostsDataContextProvider } from "./contexts/PostsDataContext";
 import App from "./App";
 import "./index.css";
 
@@ -12,13 +13,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <UsersDataContextProvider>
-        <AuthContextProvider>
-          <PostsDataContextProvider>
-            <App />
-          </PostsDataContextProvider>
-        </AuthContextProvider>
-      </UsersDataContextProvider>
+      <ThemeContextProvider>
+        <UsersDataContextProvider>
+          <AuthContextProvider>
+            <PostsDataContextProvider>
+              <App />
+            </PostsDataContextProvider>
+          </AuthContextProvider>
+        </UsersDataContextProvider>
+      </ThemeContextProvider>
     </Router>
   </React.StrictMode>
 );
