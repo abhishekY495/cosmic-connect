@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
+import loadingGif from "../assets/loadingGif.gif";
 import UserInfo from "./PostComponents/UserInfo";
 import PostContent from "./PostComponents/PostContent";
 import SocialInteractionBar from "./PostComponents/SocialInteractionBar";
 import Comments from "./PostComponents/Comments";
-import { Link } from "react-router-dom";
 import { PostsDataContext } from "../contexts/PostsDataContext";
 
 export default function SinglePost({ post, showComments }) {
   const {
-    state: { postsDataError },
+    state: { postsLoading },
   } = useContext(PostsDataContext);
   return post ? (
     <div
@@ -25,7 +26,15 @@ export default function SinglePost({ post, showComments }) {
     </div>
   ) : (
     <div className="flex flex-col items-center border-b-[1px] w-[550px] mx-auto p-7 max-[800px]:w-[100%] max-[800px]:border-l-0 max-[800px]:border-r-0">
-      {postsDataError && (
+      {postsLoading ? (
+        <div>
+          <img
+            src={loadingGif}
+            className="w-10 m-auto pt-8 rounded-full"
+            alt="infinity loader"
+          />
+        </div>
+      ) : (
         <>
           <p>Something went wrong.</p>
           <p>

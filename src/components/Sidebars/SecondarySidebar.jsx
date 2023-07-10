@@ -48,7 +48,7 @@ export default function SecondarySidebar() {
           <div>
             <img
               src={loadingGif}
-              className="w-10 m-auto pt-8"
+              className="w-10 m-auto pt-8 rounded-full"
               alt="infinity loader"
             />
           </div>

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import verifiedIcon from "../../assets/profile/verified.svg";
 import editIcon from "../../assets/posts/edit-icon.svg";
+import darkEditIcon from "../../assets/posts/dark-edit-icon.svg";
 import PostSettings from "./PostSettings";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export default function UserInfo({ post, showComments }) {
+  const {
+    theme: { darkMode },
+  } = useContext(ThemeContext);
   const formatDate = (userDate) => {
     const date = new Date(userDate);
     const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
@@ -39,7 +44,13 @@ export default function UserInfo({ post, showComments }) {
                 {post?.edited && (
                   <div className="flex gap-1">
                     <span>•</span>
-                    <img src={editIcon} className="w-4 mb-1 opacity-40" alt="edit" />
+                    <img
+                      src={darkMode ? darkEditIcon : editIcon}
+                      className={`w-4 mb-1 ${
+                        darkMode ? "opacity-60" : "opacity-60"
+                      }`}
+                      alt="edit"
+                    />
                   </div>
                 )}
               </div>
