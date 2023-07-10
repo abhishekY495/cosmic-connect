@@ -22,7 +22,7 @@ export default function PostsListing({
       {filters && <Filters />}
       {bookmarkPage && (
         <p className="sticky top-0 z-[1] w-full py-3 pl-5 border-b bg-green-300/60 backdrop-blur-lg font-medium text-xl max-[800px]:p-2 max-[800px]:pl-3">
-          BookmarkPage Posts
+          Bookmark Posts
         </p>
       )}
       {/*  */}

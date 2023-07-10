@@ -29,7 +29,7 @@ export default function Profile() {
   return (
     <div className="flex justify-center gap-10">
       <PrimarySidebar />
-      <div className="w-[552px] max-[550px]:w-[100%]">
+      <div className="w-[552px] max-[550px]:w-[100%] border">
         {usersDataLoading && (
           <div>
             <img
@@ -41,13 +41,13 @@ export default function Profile() {
         )}
         {usersDataError ? (
           <div className="pb-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
-            <p className="font-medium text-lg text-center py-10">
+            <p className="font-medium text-lg text-center py-[86px]">
               Something went wrong.
             </p>
           </div>
         ) : !usersDataLoading && !userProfile ? (
           <div className="pb-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
-            <p className="font-medium text-lg text-center py-10">
+            <p className="font-medium text-lg text-center py-[86px]">
               User profile not found.
             </p>
           </div>
