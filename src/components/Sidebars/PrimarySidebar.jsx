@@ -19,9 +19,9 @@ export default function PrimarySidebar() {
   const [openModal, setOpenModal] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
   const navLinkStyle = ({ isActive }) =>
-    !isActive
-      ? "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1"
-      : "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1 bg-zinc-400 font-medium";
+    isActive
+      ? "text-black px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:bg-zinc-400 max-[800px]:px-1 bg-zinc-400 font-medium"
+      : "px-5 text-end py-1 rounded-lg hover:cursor-pointer hover:text-black hover:font-medium hover:bg-zinc-400 max-[800px]:px-1";
 
   const mediaQueries = `
     max-[1180px]:justify-end max-[1180px]:w-fit
@@ -66,7 +66,7 @@ export default function PrimarySidebar() {
           onClick={() => setSearchModal(true)}
           className={`${
             darkMode && "hover:text-black"
-          } px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer rounded-lg max-[800px]:p-0`}
+          } px-5 py-1 hover:bg-yellow-200 hover:cursor-pointer hover:font-medium rounded-lg max-[800px]:p-0`}
         >
           <p className="max-[800px]:hidden">Search</p>
           <img
