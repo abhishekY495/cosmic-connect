@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import verifiedIcon from "../assets/profile/verified.svg";
 import followIcon from "../assets/profile/followIcon.svg";
 import followedIcon from "../assets/profile/followedIcon.svg";
 import { UsersDataContext } from "../contexts/UsersDataContext";
 import { AuthContext } from "../contexts/AuthContext";
-import { toast } from "react-hot-toast";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function SearchModal({ open, onClose }) {
@@ -64,7 +64,7 @@ export default function SearchModal({ open, onClose }) {
   return (
     <div
       id="search-modal-overlay"
-      className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[20]"
+      className="fixed top-0 right-0 bg-zinc-500/50 backdrop-blur-[1.5px] w-screen h-screen z-[20]"
       onClick={closeModal}
     >
       <div

@@ -80,7 +80,7 @@ export default function EditProfileModal({ open, onClose, userProfile }) {
     return (
       <div
         id="overlay-profile"
-        className="fixed top-0 right-0 bg-zinc-500/50 w-screen h-screen z-[20]"
+        className="fixed top-0 right-0 bg-zinc-500/50 backdrop-blur-[1.5px] w-screen h-screen z-[20]"
         onClick={closeModal}
       >
         <div
