@@ -37,7 +37,7 @@ export default function CommentBox() {
           resolve();
         }, 1500);
       }),
-      { loading: "Posting comment", success: "Commented" }
+      { loading: "Adding comment", success: "Done" }
     );
   };
 

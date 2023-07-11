@@ -14,8 +14,15 @@ export default function Comments({ comments }) {
   const { dispatch } = useContext(PostsDataContext);
 
   const deleteCommentHandler = (commentId) => {
-    dispatch({ type: "DELETE_COMMENT", payload: { postId, commentId } });
-    toast.success("Comment deleted");
+    toast.promise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          dispatch({ type: "DELETE_COMMENT", payload: { postId, commentId } });
+          resolve();
+        }, 1000);
+      }),
+      { loading: "Deleting", success: "Deleted" }
+    );
   };
 
   const formatDate = (userDate) => {

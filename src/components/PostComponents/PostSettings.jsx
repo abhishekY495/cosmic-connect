@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 
 import optionsIcon from "../../assets/posts/options-icon.svg";
 import deleteIcon from "../../assets/posts/delete-icon.svg";
@@ -19,8 +20,16 @@ export default function PostSettings({ post }) {
   const [openModal, setOpenModal] = useState(false);
 
   const deletePost = (postId) => {
-    dispatch({ type: "DELETE_POST", payload: postId });
     setHideOptions(true);
+    toast.promise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          dispatch({ type: "DELETE_POST", payload: postId });
+          resolve();
+        }, 1500);
+      }),
+      { loading: "Deleting", success: "Deleted" }
+    );
   };
 
   const editPost = () => {
