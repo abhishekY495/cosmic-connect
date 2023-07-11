@@ -50,11 +50,14 @@ export default function PostsListing({
           </p>
         )}
         {/*  */}
-        {!postsLoading && homePage && postsData?.length === 0 && (
-          <p className="w-[100%] mx-auto pt-10 text-center">
-            You follow nobody...
-          </p>
-        )}
+        {!postsLoading &&
+          !postsDataError &&
+          homePage &&
+          postsData?.length === 0 && (
+            <p className="w-[100%] mx-auto pt-10 text-center">
+              You follow nobody...
+            </p>
+          )}
         {/*  */}
         {!postsLoading &&
         profilePage &&
@@ -74,11 +77,14 @@ export default function PostsListing({
           )
         )}
         {/*  */}
-        {!postsLoading && bookmarkPage && postsData.length === 0 && (
-          <p className="w-[100%] mx-auto pt-10 text-center">
-            Nothing to show...
-          </p>
-        )}
+        {!postsLoading &&
+          !postsDataError &&
+          bookmarkPage &&
+          postsData.length === 0 && (
+            <p className="w-[100%] mx-auto pt-10 text-center">
+              Nothing to show...
+            </p>
+          )}
         {/*  */}
         {postsData?.map((post, index) => {
           return <SinglePost key={index} post={post} />;
