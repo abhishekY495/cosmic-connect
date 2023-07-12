@@ -87,7 +87,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logoutUser = () => {
-    localStorage.clear();
+    localStorage.removeItem("currentUser");
     navigate("/login");
   };
 
