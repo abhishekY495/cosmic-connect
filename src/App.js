@@ -13,6 +13,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import { PostsDataContext } from "./contexts/PostsDataContext";
 import { UsersDataContext } from "./contexts/UsersDataContext";
 import BookmarkedPage from "./pages/BookmarkedPage";
+import { localData } from "./localData";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -29,13 +30,24 @@ function App() {
   const USERS_API_URL =
     "https://cosmic-connect-api.abhisheky495.repl.co/usersdata";
 
+  const fakeFetch = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ getLocalData: true });
+    }, 4000);
+  });
+
   const getPosts = async () => {
     postsDispatch({ type: "LOADING" });
     try {
-      const response = await fetch(POSTS_API_URL);
-      const data = await response.json();
-      postsDispatch({ type: "GET_POSTS_DATA", payload: data });
-      postsDispatch({ type: "FILTER_BY_CREATED_AT" });
+      const response = await Promise.race([fetch(POSTS_API_URL), fakeFetch]);
+      if (response.getLocalData) {
+        postsDispatch({ type: "GET_POSTS_DATA", payload: localData.postsData });
+        postsDispatch({ type: "FILTER_BY_CREATED_AT" });
+      } else {
+        const data = await response.json();
+        postsDispatch({ type: "GET_POSTS_DATA", payload: data });
+        postsDispatch({ type: "FILTER_BY_CREATED_AT" });
+      }
     } catch (error) {
       postsDispatch({ type: "GET_POSTS_DATA_ERROR", payload: error });
     }
@@ -43,9 +55,13 @@ function App() {
   const getUsers = async () => {
     usersDispatch({ type: "USERS_DATA_LOADING" });
     try {
-      const response = await fetch(USERS_API_URL);
-      const data = await response.json();
-      usersDispatch({ type: "GET_USERS_DATA", payload: data });
+      const response = await Promise.race([fetch(USERS_API_URL), fakeFetch]);
+      if (response.getLocalData) {
+        usersDispatch({ type: "GET_USERS_DATA", payload: localData.usersData });
+      } else {
+        const data = await response.json();
+        usersDispatch({ type: "GET_USERS_DATA", payload: data });
+      }
     } catch (error) {
       usersDispatch({ type: "GET_USERS_DATA_ERROR", payload: error });
     }
@@ -85,9 +101,7 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
+            currentUser ? <Navigate to="/home" /> : <Navigate to="/login" />
           }
         />
         <Route
