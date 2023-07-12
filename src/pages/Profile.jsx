@@ -41,7 +41,7 @@ export default function Profile() {
         )}
         {usersDataError ? (
           <div className="pb-2 sticky top-0 bg-slate-300/90 backdrop-blur-3xl z-[1]">
-            <p className="font-medium text-lg text-center py-[86px]">
+            <p className=" text-black font-medium text-lg text-center py-[86px]">
               Something went wrong.
             </p>
           </div>
