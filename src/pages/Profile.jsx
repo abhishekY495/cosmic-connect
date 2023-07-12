@@ -29,12 +29,12 @@ export default function Profile() {
   return (
     <div className="flex justify-center gap-10">
       <PrimarySidebar />
-      <div className="w-[552px] max-[800px]:w-[100%] border max-[800px]:border-l-0 max-[800px]:border-r-0">
+      <div className="w-[552px] max-[800px]:w-full border border-t-0 max-[800px]:border-l-0 max-[800px]:border-r-0">
         {usersDataLoading && (
           <div>
             <img
               src={loadingGif}
-              className="w-10 m-auto pt-8 rounded-full"
+              className="w-10 m-auto pt-16 rounded-full"
               alt="infinity loader"
             />
           </div>

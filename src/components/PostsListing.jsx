@@ -22,21 +22,21 @@ export default function PostsListing({
   } = useContext(ThemeContext);
 
   return (
-    <div className="flex flex-col relative pb-40 border-[1px] border-zinc-200 border-t-0 border-b-0 max-[800px]:w-[100%] max-[800px]:border-l-0 max-[800px]:border-r-0">
+    <div className="flex flex-col relative pb-40 border border-zinc-200 border-t-0 border-b-0 max-[800px]:w-full max-[800px]:border-l-0 max-[800px]:border-r-0">
       {filters && <Filters />}
       {bookmarkPage && (
         <p
           className={`${
             darkMode && "text-black"
-          } sticky top-0 z-[1] w-full py-3 pl-5 border-b bg-green-300/60 backdrop-blur-lg font-medium text-xl max-[800px]:p-2 max-[800px]:pl-3`}
+          } sticky top-0 z-[1] w-full py-3 pl-5 border-b bg-zinc-300/60 backdrop-blur-lg font-medium text-xl max-[800px]:p-2 max-[800px]:pl-3`}
         >
           Bookmark Posts
         </p>
       )}
       {/*  */}
-      <div className="w-[550px] max-[800px]:w-[100%]">
+      <div className="w-[550px] max-[800px]:w-full">
         {postsLoading && (
-          <div className="w-[100%] mx-auto pt-10">
+          <div className="w-full mx-auto pt-10">
             <img
               src={loadingGif}
               className="w-10 m-auto pt-8 rounded-full"
@@ -45,7 +45,7 @@ export default function PostsListing({
           </div>
         )}
         {postsDataError && (
-          <p className="w-[100%] pt-10 text-center">
+          <p className="w-full pt-10 text-center">
             Refresh or Try again later
           </p>
         )}
@@ -54,7 +54,7 @@ export default function PostsListing({
           !postsDataError &&
           homePage &&
           postsData?.length === 0 && (
-            <p className="w-[100%] mx-auto pt-10 text-center">
+            <p className="w-full mx-auto pt-10 text-center">
               You follow nobody...
             </p>
           )}
@@ -63,14 +63,14 @@ export default function PostsListing({
         profilePage &&
         userProfile?.userName === currentUser?.userName &&
         postsData?.length === 0 ? (
-          <p className="w-[100%] mx-auto pt-10 text-center">
+          <p className="w-full mx-auto pt-10 text-center">
             Post Something...
           </p>
         ) : (
           !postsLoading &&
           profilePage &&
           postsData?.length === 0 && (
-            <p className="w-[100%] mx-auto pt-10 text-center">
+            <p className="w-full mx-auto pt-10 text-center">
               {userProfile &&
                 `${userProfile?.fullName} hasn't posted anything.`}
             </p>
@@ -81,7 +81,7 @@ export default function PostsListing({
           !postsDataError &&
           bookmarkPage &&
           postsData.length === 0 && (
-            <p className="w-[100%] mx-auto pt-10 text-center">
+            <p className="w-full mx-auto pt-10 text-center">
               Nothing to show...
             </p>
           )}

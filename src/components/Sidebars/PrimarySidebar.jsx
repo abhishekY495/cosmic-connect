@@ -28,8 +28,8 @@ export default function PrimarySidebar() {
     max-[800px]:border-none max-[800px]:flex-row max-[800px]:fixed 
     max-[800px]:bg-slate-300 
     max-[800px]:h-[180px] max-[800px]:top-[94%] 
-    max-[800px]:z-10 max-[800px]:items-start max-[800px]:w-[100%]
-    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:pt-[5px] max-[800px]:justify-around max-[800px]:w-[100%]`;
+    max-[800px]:z-10 max-[800px]:items-start max-[800px]:w-full
+    max-[800px]:gap-1 max-[800px]:p-2 max-[800px]:pt-[5px] max-[800px]:justify-around max-[800px]:w-full`;
 
   return (
     <>

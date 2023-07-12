@@ -11,6 +11,7 @@ export default function UserInfo({ post, showComments }) {
   const {
     theme: { darkMode },
   } = useContext(ThemeContext);
+  
   const formatDate = (userDate) => {
     const date = new Date(userDate);
     const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
@@ -46,9 +47,7 @@ export default function UserInfo({ post, showComments }) {
                     <span>•</span>
                     <img
                       src={darkMode ? darkEditIcon : editIcon}
-                      className={`w-4 mb-1 ${
-                        darkMode ? "opacity-60" : "opacity-60"
-                      }`}
+                      className="w-4 opacity-60"
                       alt="edit"
                     />
                   </div>
