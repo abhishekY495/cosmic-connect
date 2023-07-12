@@ -6,6 +6,8 @@ import exploreIcon from "../../assets/navbar/exploreIcon.svg";
 import searchIcon from "../../assets/navbar/searchIcon.svg";
 import newPostIcon from "../../assets/navbar/newPostIcon.svg";
 import bookmarkIcon from "../../assets/navbar/bookmarkIcon.svg";
+import moonIcon from "../../assets/theme/moonIcon.svg";
+import sunIcon from "../../assets/theme/sunIcon.svg";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import PostFormModal from "../PostFormModal";
@@ -15,6 +17,7 @@ export default function PrimarySidebar() {
   const { currentUser } = useContext(AuthContext);
   const {
     theme: { darkMode },
+    toggleTheme,
   } = useContext(ThemeContext);
   const [openModal, setOpenModal] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
@@ -38,6 +41,12 @@ export default function PrimarySidebar() {
       <aside
         className={`w-[220px] border-r-[1px] border-zinc-300 pr-3 py-3 pb-5 sticky top-0 h-screen flex flex-col gap-4 items-end ${mediaQueries}`}
       >
+        <img
+          src={darkMode ? sunIcon : moonIcon}
+          onClick={toggleTheme}
+          className="w-7 mr-3 hover:cursor-pointer max-[800px]:hidden"
+          alt={darkMode ? "sun" : "moon"}
+        />
         <NavLink className={navLinkStyle} to="/home">
           <p className="max-[800px]:hidden">Home</p>
           <img

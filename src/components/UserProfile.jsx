@@ -119,7 +119,7 @@ export default function UserProfile({ userProfile, username }) {
               <img
                 src={darkMode ? sunIcon : moonIcon}
                 onClick={toggleTheme}
-                className="w-7 hover:cursor-pointer"
+                className="w-7 hover:cursor-pointer min-[800px]:hidden"
                 alt={darkMode ? "sun" : "moon"}
               />
               <img
