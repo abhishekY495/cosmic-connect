@@ -8,11 +8,11 @@ import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import Profile from "./pages/Profile";
 import SinglePostPage from "./pages/SinglePostPage";
+import BookmarkedPage from "./pages/BookmarkedPage";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { AuthContext } from "./contexts/AuthContext";
 import { PostsDataContext } from "./contexts/PostsDataContext";
 import { UsersDataContext } from "./contexts/UsersDataContext";
-import BookmarkedPage from "./pages/BookmarkedPage";
 import { localData } from "./localData";
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
   const fakeFetch = new Promise((resolve) => {
     setTimeout(() => {
       resolve({ getLocalData: true });
-    }, 4000);
+    }, 100);
   });
 
   const getPosts = async () => {

@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 import randomIcon from "../assets/randomIcon.svg";
+import appIcon from "../assets/cosmic-connect-icon.svg";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 
@@ -91,7 +92,15 @@ export default function Authentication({ signup, login }) {
   };
 
   return (
-    <div className={`${darkMode ? "bg-zinc-900" : "bg-white"} h-screen pt-5`}>
+    <div className={`${darkMode ? "bg-zinc-900" : "bg-white"} h-screen pt-3`}>
+      <header className="flex justify-center items-center gap-2 text-center pb-3 text-3xl font-semibold">
+        <img
+          src={appIcon}
+          className="w-8 animate-spin-slow"
+          alt="cosmic connet"
+        />
+        Cosmic Connect
+      </header>
       <div
         className={`${
           darkMode && "text-black"
